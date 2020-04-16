@@ -108,4 +108,11 @@ public class Evenement {
     public void setGroepOrganisator(Groep groepOrganisator) {
         this.groepOrganisator = groepOrganisator;
     }
+
+    public boolean organisatorIsGroep(){
+        return groepOrganisator != null;
+    }
+    public boolean organisatorIsAccount(){
+        return accountOrganisator != null;
+    }
 }
