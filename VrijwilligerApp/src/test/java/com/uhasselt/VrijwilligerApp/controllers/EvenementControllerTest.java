@@ -15,4 +15,5 @@ public class EvenementControllerTest {
     public void contexLoads() throws Exception {
         assertThat(controller).isNotNull();
     }
+
 }
