@@ -1,7 +1,5 @@
 package com.uhasselt.VrijwilligerApp.models;
 
-import com.uhasselt.VrijwilligerApp.interfaces.IOrganisator;
-import com.uhasselt.VrijwilligerApp.models.Adres;
 import javax.persistence.Id;
 import javax.persistence.*;
 import java.util.List;
@@ -30,8 +28,11 @@ public class Evenement {
     @OneToOne
     private Adres adres;
 
-//    @OneToOne
-//    private IOrganisator organisator;
+    @OneToOne
+    private Account accountOrganisator;
+
+    @OneToOne
+    private Groep groepOrganisator;
 
     public Evenement() {
     }
@@ -87,12 +88,20 @@ public class Evenement {
     public void setAdres(Adres adres) {
         this.adres = adres;
     }
-//
-//    public IOrganisator getOrganisator() {
-//        return organisator;
-//    }
-//
-//    public void setOrganisator(IOrganisator organisator) {
-//        this.organisator = organisator;
-//    }
+
+    public Account getAccountOrganisator() {
+        return accountOrganisator;
+    }
+
+    public void setAccountOrganisator(Account accountOrganisator) {
+        this.accountOrganisator = accountOrganisator;
+    }
+
+    public Groep getGroepOrganisator() {
+        return groepOrganisator;
+    }
+
+    public void setGroepOrganisator(Groep groepOrganisator) {
+        this.groepOrganisator = groepOrganisator;
+    }
 }
