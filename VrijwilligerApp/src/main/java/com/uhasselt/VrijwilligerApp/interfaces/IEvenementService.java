@@ -5,5 +5,6 @@ import com.uhasselt.VrijwilligerApp.models.Evenement;
 import java.util.Optional;
 
 public interface IEvenementService {
-    Optional<Evenement> findByID(long id);
+    Evenement findByID(long id);
+    Evenement save(Evenement nieuwEvenement);
 }

@@ -14,7 +14,12 @@ public class EvenementService implements IEvenementService {
     private EvenementRepository evenementRepository;
 
     @Override
-    public Optional<Evenement> findByID(long id) {
-        return evenementRepository.findById(id);
+    public Evenement findByID(long id) {
+        return evenementRepository.findById(id).get();
+    }
+
+    @Override
+    public Evenement save(Evenement nieuwEvenement) {
+        return evenementRepository.save(nieuwEvenement);
     }
 }

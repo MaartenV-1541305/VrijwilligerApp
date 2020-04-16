@@ -20,6 +20,11 @@ public class Taak {
     public Taak() {
     }
 
+    public Taak(String s, int i) {
+        this.rol = s;
+        this.aantal = i;
+    }
+
     public Long getId() {
         return id;
     }

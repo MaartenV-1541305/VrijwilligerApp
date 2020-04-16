@@ -73,6 +73,10 @@ public class Evenement {
         this.taken = taken;
     }
 
+    public void addTaak(Taak taak){
+        taken.add(taak);
+    }
+
     public List<Account> getInschrijvingen() {
         return inschrijvingen;
     }
