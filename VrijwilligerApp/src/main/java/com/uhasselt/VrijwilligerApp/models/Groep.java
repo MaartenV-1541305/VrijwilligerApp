@@ -1,11 +1,6 @@
 package com.uhasselt.VrijwilligerApp.models;
 
-import org.springframework.data.annotation.Id;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -19,10 +14,13 @@ public class Groep {
 
     private String beschrijving;
 
+    @OneToMany
     private List<GroepsLid> leden;
 
+    @OneToMany
     private List<GroepsLid> admins;
 
+    @OneToOne
     private GroepsLid maker;
 
     private boolean verified;

@@ -1,7 +1,6 @@
 package com.uhasselt.VrijwilligerApp.models;
 
-import org.springframework.data.annotation.Id;
-
+import javax.persistence.Id;
 import javax.persistence.*;
 
 @Entity
@@ -20,6 +19,7 @@ public class Account {
 
     private String password;
 
+    @OneToOne
     private Adres adres;
 
     public Account() {

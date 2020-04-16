@@ -1,12 +1,6 @@
 package com.uhasselt.VrijwilligerApp.models;
 
-import com.uhasselt.VrijwilligerApp.interfaces.IOrganisator;
-import org.springframework.data.annotation.Id;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -16,14 +10,18 @@ public class Inschrijving {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne
     private Account account;
 
+    @OneToOne
     private Evenement evenement;
 
     private boolean aanwezigheid;
 
+    @OneToMany
     private List<Benodigheid> benodigheden;
 
+    @OneToOne
     private Taak taak;
 
     public Inschrijving() {

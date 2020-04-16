@@ -1,8 +1,8 @@
 package com.uhasselt.VrijwilligerApp.models;
 
 import com.uhasselt.VrijwilligerApp.interfaces.IOrganisator;
-import org.springframework.data.annotation.Id;
-
+import com.uhasselt.VrijwilligerApp.models.Adres;
+import javax.persistence.Id;
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,15 +18,20 @@ public class Evenement {
 
     private String beschrijving;
 
+    @OneToMany
     private List<Benodigheid> benodigheden;
 
+    @OneToMany
     private List<Taak> taken;
 
+    @OneToMany
     private List<Account> inschrijvingen;
 
+    @OneToOne
     private Adres adres;
 
-    private IOrganisator organisator;
+//    @OneToOne
+//    private IOrganisator organisator;
 
     public Evenement() {
     }
@@ -82,12 +87,12 @@ public class Evenement {
     public void setAdres(Adres adres) {
         this.adres = adres;
     }
-
-    public IOrganisator getOrganisator() {
-        return organisator;
-    }
-
-    public void setOrganisator(IOrganisator organisator) {
-        this.organisator = organisator;
-    }
+//
+//    public IOrganisator getOrganisator() {
+//        return organisator;
+//    }
+//
+//    public void setOrganisator(IOrganisator organisator) {
+//        this.organisator = organisator;
+//    }
 }
