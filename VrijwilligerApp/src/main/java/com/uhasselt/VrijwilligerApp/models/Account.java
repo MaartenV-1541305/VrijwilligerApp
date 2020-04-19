@@ -25,7 +25,16 @@ public class Account {
     public Account() {
     }
 
-    public long getId(){
+    public Account(String nm, String vnm, String email, String pw, Adres adres) {
+        //TODO: ID?
+        this.naam = vnm;
+        this.voornaam = vnm;
+        this.email = email;
+        this.password = pw;
+        this.adres = adres;
+    }
+
+    public long getId() {
         return id;
     }
 

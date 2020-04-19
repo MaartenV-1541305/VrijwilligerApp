@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 
@@ -27,30 +28,27 @@ public class AccountControllerTest {
     @Before
     public void setUp() {
         accountService = Mockito.mock(IAccountService.class);
-        //TODO: (note tomeself) constructor voorzien voor account.
-        account = new Account();
-        account.setVoornaam("John");
-        account.setNaam("Doe");
-        account.setEmail("s@s.be");
-        account.setPassword("wachtwoord123");
-
-        //TODO: zelfde hier.
         adres = new Adres();
         adres.setGemeente("Hasselt");
         adres.setPostcode("3550"); // postcode int veranderen?
-
-        account.setAdres(adres);
 
         accountController = new AccountController();
     }
 
     @Test
     public void nieuwAccountTest() {
-        int status = accountController.nieuwAccount(account).getStatusCode().value();
-        Account result = accountController.nieuwAccount(account).getBody();
-        //TODO voeg taak aan evenement toe, save of update nieuw evenement en check of taak toegevoegd is
+        ResponseEntity<Account> account = accountController.nieuwAccount("Doe", "John", "s@a.be", "password123", "password123", adres);
+        //TODO: Beter vergelijking vn verschillende mogelijkheden.
+        int status = account.getStatusCode().value();
+        Account result = account.getBody();
+        //als passwords niet gelijk.
+        //Assertions.assertEquals(status, 403);
+
         Assertions.assertEquals(status, 200);
-        assert result != null;
-        Assertions.assertEquals(result.getNaam(), "Doe");
+
+        if (result != null) {
+            Assertions.assertEquals(result.getVoornaam(), "John");
+        }
+
     }
 }

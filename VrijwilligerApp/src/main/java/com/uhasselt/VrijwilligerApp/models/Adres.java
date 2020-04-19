@@ -22,6 +22,14 @@ public class Adres {
     private String gemeente;
 
     public Adres() {
+
+    }
+
+    public Adres(String straat, int huisnr, String postcode, String gemeente) {
+        this.straat = straat;
+        this.huisnummer = huisnr;
+        this.postcode = postcode;
+        this.gemeente = gemeente;
     }
 
     public Long getId() {
