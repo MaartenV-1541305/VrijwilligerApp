@@ -24,7 +24,6 @@ public class EvenementController {
     @ResponseBody
     @PostMapping(path = {"/evenement/taak"})
     public ResponseEntity<Taak> postTaak(@RequestBody Taak taak ){
-
         return new ResponseEntity<Taak>(taak, HttpStatus.OK);
     }
 
