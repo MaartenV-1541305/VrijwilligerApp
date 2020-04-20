@@ -11,7 +11,7 @@ import org.mockito.Mockito;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-
+import org.springframework.http.ResponseEntity;
 
 
 import java.util.ArrayList;
@@ -77,4 +77,14 @@ public class EvenementControllerTest {
         Assertions.assertEquals(result, null);
 
     }
+    public void zoekEvenementenTest() throws Exception {
+        ResponseEntity<List<Evenement>> responseEntity = evenementController.zoekEvenementen("test");
+        int status = responseEntity.getStatusCode().value();
+        List<Evenement> result = responseEntity.getBody();
+
+        Assertions.assertEquals(status,200);
+        assert result != null;
+        Assertions.assertEquals(result.size(), 0);
+    }
+
 }

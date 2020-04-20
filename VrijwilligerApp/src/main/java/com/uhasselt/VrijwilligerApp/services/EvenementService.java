@@ -6,6 +6,7 @@ import com.uhasselt.VrijwilligerApp.repository.EvenementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,5 +22,10 @@ public class EvenementService implements IEvenementService {
     @Override
     public Evenement save(Evenement nieuwEvenement) {
         return evenementRepository.save(nieuwEvenement);
+    }
+
+    @Override
+    public List<Evenement> findByName(String naamEvenement) {
+        return evenementRepository.findByName(naamEvenement);
     }
 }
