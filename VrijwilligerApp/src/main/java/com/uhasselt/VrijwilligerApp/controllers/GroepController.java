@@ -44,6 +44,7 @@ public class GroepController {
         eigenaarLid.setAdmin(true);
         groep.setName(groepsNaam);
         groep.setMaker(eigenaarLid);
+        groep.getLeden().add(eigenaarLid);
 
         return new ResponseEntity<>(groep, HttpStatus.OK);
     }
@@ -52,8 +53,7 @@ public class GroepController {
     @ResponseBody
     @PostMapping(path = {"/groep"})
     @SuppressWarnings("null")
-    public ResponseEntity<Groep> voegGroepsLidToe(int groepId, Account account) {
-        Groep groep = this.getGroepById(groepId).getBody();
+    public ResponseEntity<Groep> voegGroepsLidToe(Groep groep, Account account) {
         GroepsLid lid = new GroepsLid();
         lid.setAccount(account);
         groep.getLeden().add(lid);
@@ -65,19 +65,18 @@ public class GroepController {
     @ResponseBody
     @PostMapping(path = {"/groep"})
     @SuppressWarnings("null")
-    public ResponseEntity<Groep> zetBeschrijving(int groepId, String beschrijving) {
-        Groep groep = this.getGroepById(groepId).getBody();
+    public ResponseEntity<Groep> zetBeschrijving(Groep groep, String beschrijving) {
         groep.setBeschrijving(beschrijving);
         
         return new ResponseEntity<>(groep, HttpStatus.OK);
     }
     
-    public ResponseEntity<Groep> getGroepById(int id) {
+    public ResponseEntity<Groep> getGroepById(long id) {
         //TODO: GET GROEP
         return null;
     }
     
-    public void groepAanmakenBeeindigen(int groepId) {
+    public void groepAanmakenBeeindigen(long groepId) {
         //TODO: stuur afrondings bericht
     }
     
