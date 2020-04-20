@@ -20,6 +20,11 @@ public class EvenementService implements IEvenementService {
     }
 
     @Override
+    public List<Evenement> getAllGeorganiseerdeEvenementen(int accountId) {
+        return null;
+    }
+
+    @Override
     public Evenement save(Evenement nieuwEvenement) {
         return evenementRepository.save(nieuwEvenement);
     }
