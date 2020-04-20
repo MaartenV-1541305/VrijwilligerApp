@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface EvenementRepository extends JpaRepository<Evenement, Long> {
 
-    @Query("Select e from Evenement e where e.name like %:naamEvenement%")
+    @Query("Select e from Evenement e where e.naam like %:naamEvenement%")
     List<Evenement> findByName(String naamEvenement);
 }
