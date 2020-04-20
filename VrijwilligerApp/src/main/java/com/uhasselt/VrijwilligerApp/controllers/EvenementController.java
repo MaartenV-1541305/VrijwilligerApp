@@ -44,7 +44,9 @@ public class EvenementController {
 //        List<Evenement> evenementen = evenementService.findByName(naamEvenement);
 //        return new ResponseEntity<List<Evenement>>(evenementen, HttpStatus.OK);
 
-        List<Evenement> evenementen=new ArrayList<Evenement>();
-        return new ResponseEntity<List<Evenement>>(evenementen, HttpStatus.OK);
+//        List<Evenement> evenementen=new ArrayList<Evenement>();
+//        return new ResponseEntity<List<Evenement>>(evenementen, HttpStatus.OK);
+
+        return null;
     }
 }

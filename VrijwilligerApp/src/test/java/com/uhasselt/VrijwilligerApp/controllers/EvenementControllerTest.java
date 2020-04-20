@@ -38,8 +38,10 @@ public class EvenementControllerTest {
         taak = new Taak("taak", 5);
         evenement = new Evenement();
         evenementController = new EvenementController();
+        fakeRandom = Mockito.mock(Random.class);
         Mockito.when(fakeRandom.nextInt()).thenReturn(0);
 
+        georganiseerdeEvenementen = new ArrayList<Evenement>();
         georganiseerdeEvenementen.add(new Evenement());
         georganiseerdeEvenementen.add(new Evenement());
     }
@@ -77,14 +79,12 @@ public class EvenementControllerTest {
         Assertions.assertEquals(result, null);
 
     }
-    public void zoekEvenementenTest() throws Exception {
-        ResponseEntity<List<Evenement>> responseEntity = evenementController.zoekEvenementen("test");
-        int status = responseEntity.getStatusCode().value();
-        List<Evenement> result = responseEntity.getBody();
 
-        Assertions.assertEquals(status,200);
-        assert result != null;
-        Assertions.assertEquals(result.size(), 0);
+    @Test
+    public void zoekEvenementenTest(){
+        Mockito.when(evenementService.findByName("test")).thenReturn(null);
+        List<Evenement> result = evenementController.zoekEvenementen("test").getBody();
+        Assertions.assertEquals(result, null);
     }
 
 }
