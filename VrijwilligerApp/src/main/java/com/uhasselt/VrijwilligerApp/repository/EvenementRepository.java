@@ -12,4 +12,7 @@ public interface EvenementRepository extends JpaRepository<Evenement, Long> {
 
     @Query("Select e from Evenement e where e.naam like %:naamEvenement%")
     List<Evenement> findByName(String naamEvenement);
+
+    List<Evenement> getGeorganiseerdeEvenementen(int accountId);
+
 }
