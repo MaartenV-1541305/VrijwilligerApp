@@ -3,19 +3,20 @@ package com.uhasselt.VrijwilligerApp.controllers;
 import com.uhasselt.VrijwilligerApp.interfaces.IEvenementService;
 import com.uhasselt.VrijwilligerApp.models.Evenement;
 import com.uhasselt.VrijwilligerApp.models.Taak;
+import com.uhasselt.VrijwilligerApp.repository.IEvenementRepository;
 import com.uhasselt.VrijwilligerApp.services.EvenementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class EvenementController {
+    //private IEvenementRepository evenementRepository;
     @Autowired
-    private IEvenementService evenementService =new EvenementService();
+    private IEvenementService evenementService; //=new EvenementService(evenementRepository);
 
     @CrossOrigin
     @GetMapping(path = {"/evenement/{id}"})

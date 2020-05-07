@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Assertions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -52,6 +51,18 @@ public class EvenementControllerTest {
         gevondenEvenementen.add(new Evenement());
     }
 
+    @Test
+    public void getAllGeorganiseerdeEvenementenTest()
+    {
+        Mockito.when(evenementService.getAllGeorganiseerdeEvenementen(fakeRandom.nextInt())).thenReturn(georganiseerdeEvenementen);
+        List<Evenement> result = evenementController.getGeorganiseerdEvenementen(fakeRandom.nextInt()).getBody();
+
+        Assertions.assertEquals(result , georganiseerdeEvenementen);
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.size(), georganiseerdeEvenementen.size());
+
+    }
+
 
     @Test
     public void postTaakTest() throws Exception {
@@ -63,18 +74,6 @@ public class EvenementControllerTest {
         Assertions.assertEquals(result.getAantal(), 5);
     }
 
-    @Test
-    public void getAllGeorganiseerdeEvenementenTest()
-    {
-        Mockito.when(evenementService.getAllGeorganiseerdeEvenementen(fakeRandom.nextInt())).thenReturn(georganiseerdeEvenementen);
-        List<Evenement> result = evenementController.getGeorganiseerdEvenementen(fakeRandom.nextInt()).getBody();
-
-        Assertions.assertEquals(result , georganiseerdeEvenementen);
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(result.size(), georganiseerdeEvenementen.size());
-
-
-    }
 
     @Test
     public void getAllGeorganiseerdeEvenementenWithInvalidIdTest()
@@ -92,5 +91,4 @@ public class EvenementControllerTest {
         List<Evenement> result = evenementController.zoekEvenementen("test").getBody();
         Assertions.assertEquals(result, gevondenEvenementen);
     }
-
 }

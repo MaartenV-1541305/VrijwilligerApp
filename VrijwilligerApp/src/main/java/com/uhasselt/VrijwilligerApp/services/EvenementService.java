@@ -2,17 +2,21 @@ package com.uhasselt.VrijwilligerApp.services;
 
 import com.uhasselt.VrijwilligerApp.interfaces.IEvenementService;
 import com.uhasselt.VrijwilligerApp.models.Evenement;
-import com.uhasselt.VrijwilligerApp.repository.EvenementRepository;
+import com.uhasselt.VrijwilligerApp.repository.IEvenementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EvenementService implements IEvenementService {
     @Autowired
-    private EvenementRepository evenementRepository;
+    private IEvenementRepository evenementRepository;
+
+    public EvenementService(IEvenementRepository evenementRepository) {
+        this.evenementRepository = evenementRepository;
+    }
+
 
     @Override
     public Evenement findByID(long id) {
@@ -21,7 +25,7 @@ public class EvenementService implements IEvenementService {
 
     @Override
     public List<Evenement> getAllGeorganiseerdeEvenementen(int accountId) {
-        return null;
+        return evenementRepository.getGeorganiseerdeEvenementen(accountId);
     }
 
     @Override
@@ -30,7 +34,7 @@ public class EvenementService implements IEvenementService {
     }
 
     @Override
-    public List<Evenement> findByName(String naamEvenement) {
-        return evenementRepository.findByName(naamEvenement);
+    public List<Evenement> getEvenementen(String naamEvenement) {
+        return evenementRepository.selectEvenementen(naamEvenement);
     }
 }
