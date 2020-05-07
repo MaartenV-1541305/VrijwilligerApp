@@ -25,7 +25,7 @@ public class EvenementService implements IEvenementService {
 
     @Override
     public List<Evenement> getAllGeorganiseerdeEvenementen(int accountId) {
-        return null;
+        return evenementRepository.getGeorganiseerdeEvenementen(accountId);
     }
 
     @Override

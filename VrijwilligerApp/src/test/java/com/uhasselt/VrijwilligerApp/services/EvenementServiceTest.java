@@ -32,7 +32,7 @@ public class EvenementServiceTest {
         fakeRandom = Mockito.mock(Random.class);
         Mockito.when(fakeRandom.nextInt()).thenReturn(0);
 
-        georganiseerdeEvenementen = new ArrayList<Evenement>();
+        georganiseerdeEvenementen = new ArrayList<>();
         Evenement e1 = new Evenement();
         e1.setNaam("evenement1");
         Evenement e2 = new Evenement();
@@ -61,7 +61,7 @@ public class EvenementServiceTest {
 
         Mockito.when(repository.getGeorganiseerdeEvenementen(-58494468)).thenReturn(null);
 
-        List<Evenement> result = evenementService.getAllGeorganiseerdeEvenementen(fakeRandom.nextInt());
+        List<Evenement> result = evenementService.getAllGeorganiseerdeEvenementen(-58494468);
 
         Assertions.assertEquals(result, null);
     }

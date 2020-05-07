@@ -14,9 +14,9 @@ import java.util.List;
 
 @RestController
 public class EvenementController {
-    private IEvenementRepository evenementRepository;
+    //private IEvenementRepository evenementRepository;
     @Autowired
-    private IEvenementService evenementService =new EvenementService(evenementRepository);
+    private IEvenementService evenementService; //=new EvenementService(evenementRepository);
 
     @CrossOrigin
     @GetMapping(path = {"/evenement/{id}"})
