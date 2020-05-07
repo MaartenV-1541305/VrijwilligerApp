@@ -9,5 +9,5 @@ public interface IEvenementService {
     Evenement findByID(long id);
     List<Evenement> getAllGeorganiseerdeEvenementen(int accountId);
     Evenement save(Evenement nieuwEvenement);
-    List<Evenement> findByName(String naamEvenement);
+    List<Evenement> getEvenementen(String naamEvenement);
 }

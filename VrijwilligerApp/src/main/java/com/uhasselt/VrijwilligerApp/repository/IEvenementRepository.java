@@ -10,9 +10,8 @@ import java.util.List;
 @Repository
 public interface IEvenementRepository extends JpaRepository<Evenement, Long> {
 
-    @Query("Select e from Evenement e where e.naam like %:naamEvenement%")
-    List<Evenement> findByName(String naamEvenement);
-
     List<Evenement> getGeorganiseerdeEvenementen(int accountId);
+
+    List<Evenement> selectEvenementen(String naamEvenement);
 
 }

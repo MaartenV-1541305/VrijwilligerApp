@@ -79,11 +79,4 @@ public class EvenementControllerTest {
 
     }
 
-    @Test
-    public void zoekEvenementenTest(){
-        Mockito.when(evenementService.findByName("test")).thenReturn(null);
-        List<Evenement> result = evenementController.zoekEvenementen("test").getBody();
-        Assertions.assertEquals(result, null);
-    }
-
 }

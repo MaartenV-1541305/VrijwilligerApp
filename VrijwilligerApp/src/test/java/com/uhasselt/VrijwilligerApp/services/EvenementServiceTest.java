@@ -23,6 +23,7 @@ public class EvenementServiceTest {
     private IEvenementRepository repository;
     private Random fakeRandom;
     private List<Evenement> georganiseerdeEvenementen;
+    private List<Evenement> gevondenEvenementen;
 
     @Before
     public void setUp(){
@@ -39,6 +40,14 @@ public class EvenementServiceTest {
         e2.setNaam("evenement2");
         georganiseerdeEvenementen.add(e1);
         georganiseerdeEvenementen.add(e2);
+
+        gevondenEvenementen = new ArrayList<>();
+        Evenement e3 = new Evenement();
+        e1.setNaam("evenement1");
+        Evenement e4 = new Evenement();
+        e2.setNaam("evenement2");
+        gevondenEvenementen.add(e1);
+        gevondenEvenementen.add(e2);
 
     }
 
@@ -64,5 +73,15 @@ public class EvenementServiceTest {
         List<Evenement> result = evenementService.getAllGeorganiseerdeEvenementen(-58494468);
 
         Assertions.assertEquals(result, null);
+    }
+
+
+    @Test
+    public void getEvenementenTest(){
+        Mockito.when(repository.selectEvenementen("test")).thenReturn(gevondenEvenementen);
+
+        List<Evenement> result = evenementService.getEvenementen("test");
+
+        Assertions.assertEquals(result, gevondenEvenementen);
     }
 }

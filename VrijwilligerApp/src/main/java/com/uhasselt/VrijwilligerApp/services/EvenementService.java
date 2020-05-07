@@ -34,7 +34,7 @@ public class EvenementService implements IEvenementService {
     }
 
     @Override
-    public List<Evenement> findByName(String naamEvenement) {
-        return evenementRepository.findByName(naamEvenement);
+    public List<Evenement> getEvenementen(String naamEvenement) {
+        return evenementRepository.selectEvenementen(naamEvenement);
     }
 }
