@@ -6,12 +6,15 @@
 package com.uhasselt.VrijwilligerApp.interfaces;
 
 import com.uhasselt.VrijwilligerApp.models.Groep;
+import java.util.List;
 
 /**
  *
  * @author vandenboer
  */
 public interface IGroepService {
-    Groep findByID(long id);
-    Groep save(Groep nieuwGroep);
+    public Groep findByID(long id);
+    public Groep save(Groep nieuwGroep);
+    public List<Groep> getAllGroepen(int accountId);
+    public List<Groep> findByName(String naamEvenement);
 }

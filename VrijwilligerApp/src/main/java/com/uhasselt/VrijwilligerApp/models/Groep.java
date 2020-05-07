@@ -10,7 +10,7 @@ public class Groep {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String naam;
 
     private String beschrijving;
 
@@ -25,19 +25,19 @@ public class Groep {
 
     private boolean verified;
 
-    public Groep() {
+    public Groep() { 
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getNaam() {
+        return naam;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNaam(String name) {
+        this.naam = name;
     }
 
     public String getBeschrijving() {
@@ -69,6 +69,7 @@ public class Groep {
     }
 
     public void setMaker(GroepsLid maker) {
+        maker.setAdmin(true);
         this.maker = maker;
     }
 

@@ -13,7 +13,7 @@ public class GroepsLid {
     private Account account;
 
     private boolean  isAdmin;
-
+    
     public GroepsLid() {
     }
 

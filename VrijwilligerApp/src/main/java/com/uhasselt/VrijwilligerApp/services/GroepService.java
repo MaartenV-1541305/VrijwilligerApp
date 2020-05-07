@@ -7,9 +7,10 @@ package com.uhasselt.VrijwilligerApp.services;
 
 import com.uhasselt.VrijwilligerApp.interfaces.IGroepService;
 import com.uhasselt.VrijwilligerApp.models.Groep;
-import com.uhasselt.VrijwilligerApp.repository.GroepRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.uhasselt.VrijwilligerApp.repository.IGroepRepository;
+import java.util.List;
 
 @Service
 /**
@@ -19,8 +20,12 @@ import org.springframework.stereotype.Service;
 public class GroepService implements IGroepService {
     
     @Autowired
-    private GroepRepository groepRepository;
+    private IGroepRepository groepRepository;
 
+    public GroepService(IGroepRepository groepRepository) {
+        this.groepRepository = groepRepository;
+    }
+    
     @Override
     public Groep findByID(long id) {
         return groepRepository.findById(id).get();
@@ -29,6 +34,16 @@ public class GroepService implements IGroepService {
     @Override
     public Groep save(Groep nieuwGroep) {
         return groepRepository.save(nieuwGroep);
+    }
+
+    @Override
+    public List<Groep> getAllGroepen(int accountId) {
+        return groepRepository.getGroepen(accountId);
+    }
+
+    @Override
+    public List<Groep> findByName(String naamEvenement) {
+        return groepRepository.findByName(naamEvenement);
     }
     
 }

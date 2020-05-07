@@ -68,7 +68,7 @@ public class GroepControllerTest {
         int status = groep.getStatusCodeValue();
         
         Assertions.assertEquals(200, status);
-        Assertions.assertEquals("Groep 1", result.getName());
+        Assertions.assertEquals("Groep 1", result.getNaam());
         Assertions.assertEquals(this.eigenaar, result.getMaker().getAccount());
         
         this.groep = result;

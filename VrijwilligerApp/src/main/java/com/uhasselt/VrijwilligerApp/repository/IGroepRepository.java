@@ -6,7 +6,9 @@
 package com.uhasselt.VrijwilligerApp.repository;
 
 import com.uhasselt.VrijwilligerApp.models.Groep;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -14,6 +16,11 @@ import org.springframework.stereotype.Repository;
  *
  * @author vandenboer
  */
-public interface GroepRepository extends JpaRepository<Groep, Long> {
+public interface IGroepRepository extends JpaRepository<Groep, Long> {
+    
+    @Query("Select g from Groep e where g.naam like %:groepsNaam%")
+    List<Groep> findByName(String groepsNaam);
+
+    List<Groep> getGroepen(int groepId);
     
 }

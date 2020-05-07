@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 public class GroepController {
     @Autowired
-    private IGroepService evenementService;
+    private IGroepService groepService;
 
     @CrossOrigin
     @GetMapping(path = {"/groep"})
@@ -42,7 +42,7 @@ public class GroepController {
         GroepsLid eigenaarLid = new GroepsLid();
         eigenaarLid.setAccount(eigenaar);
         eigenaarLid.setAdmin(true);
-        groep.setName(groepsNaam);
+        groep.setNaam(groepsNaam);
         groep.setMaker(eigenaarLid);
         groep.getLeden().add(eigenaarLid);
 
