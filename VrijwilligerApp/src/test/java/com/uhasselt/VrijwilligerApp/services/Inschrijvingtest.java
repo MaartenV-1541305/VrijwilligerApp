@@ -29,8 +29,9 @@ public class Inschrijvingtest {
 
     @Before
     public void setUp(){
-        inschrijvingService = new InschrijvingService();
-        repository = Mockito.mock(repository.getClass());
+
+        repository = Mockito.mock(IInschrijvingRepository.class);
+        inschrijvingService = new InschrijvingService(repository);
 
         fakeRandom = Mockito.mock(Random.class);
         Mockito.when(fakeRandom.nextInt()).thenReturn(0);
@@ -43,6 +44,9 @@ public class Inschrijvingtest {
         i1.setAccount(account);
         Inschrijving i2 = new Inschrijving();
         i2.setAccount(account);
+
+        inschrijvingen.add(i1);
+        inschrijvingen.add(i2);
 
     }
 
@@ -61,9 +65,9 @@ public class Inschrijvingtest {
     @Test
     public void getInschrijvingenWithInvalidAccountId(){
 
-        Mockito.when(repository.getAllInschrijvingen(-58494468)).thenReturn(null);
+        Mockito.when(repository.getAllInschrijvingen(-5)).thenReturn(null);
 
-        List<Inschrijving> result = inschrijvingService.getAllInschrijvingenByAccountId(fakeRandom.nextInt());
+        List<Inschrijving> result = inschrijvingService.getAllInschrijvingenByAccountId(-5);
 
         Assertions.assertEquals(result, null);
     }
