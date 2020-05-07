@@ -27,6 +27,7 @@ public class EvenementControllerTest {
     private List<Taak> taken;
     private List<Evenement> georganiseerdeEvenementen;
     private List<Evenement> gevondenEvenementen;
+    private Evenement gevondenEvenement;
     private Evenement evenement;
     private Taak taak;
     private Random fakeRandom;
@@ -49,6 +50,8 @@ public class EvenementControllerTest {
         gevondenEvenementen = new ArrayList<Evenement>();
         gevondenEvenementen.add(new Evenement());
         gevondenEvenementen.add(new Evenement());
+
+        gevondenEvenement=new Evenement();
     }
 
     @Test
@@ -91,4 +94,12 @@ public class EvenementControllerTest {
         List<Evenement> result = evenementController.zoekEvenementen("test").getBody();
         Assertions.assertEquals(result, gevondenEvenementen);
     }
+
+    @Test
+    public void detailsEvenementOpvragenTest(){
+        Mockito.when(evenementService.getEvenement(1)).thenReturn(gevondenEvenement);
+        Evenement result = evenementController.detailsEvenementOpvragen(1).getBody();
+        Assertions.assertEquals(result, gevondenEvenement);
+    }
+
 }

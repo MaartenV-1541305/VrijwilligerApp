@@ -37,4 +37,9 @@ public class EvenementService implements IEvenementService {
     public List<Evenement> getEvenementen(String naamEvenement) {
         return evenementRepository.selectEvenementen(naamEvenement);
     }
+
+    @Override
+    public Evenement getEvenement(long evenementId) {
+        return evenementRepository.selectEvenement(evenementId);
+    }
 }

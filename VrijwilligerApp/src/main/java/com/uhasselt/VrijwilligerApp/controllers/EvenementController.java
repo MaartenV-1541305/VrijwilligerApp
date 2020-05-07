@@ -49,4 +49,13 @@ public class EvenementController {
 
         return new ResponseEntity<List<Evenement>>(gevondenEvenementen,HttpStatus.OK);
     }
+
+    @CrossOrigin
+    @ResponseBody
+    @PostMapping(path = {"/evenement/detailsEvenementOpvragen"})
+    public ResponseEntity<Evenement> detailsEvenementOpvragen(@RequestBody long evenementId ){
+        Evenement gevondenEvenement = evenementService.getEvenement(evenementId);
+
+        return new ResponseEntity<Evenement>(gevondenEvenement,HttpStatus.OK);
+    }
 }
