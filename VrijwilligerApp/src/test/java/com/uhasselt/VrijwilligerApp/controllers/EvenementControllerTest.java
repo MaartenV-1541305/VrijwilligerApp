@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class EvenementControllerTest {
     private IEvenementService evenementService;
     private List<Taak> taken;
     private List<Evenement> georganiseerdeEvenementen;
+    private List<Evenement> gevondenEvenementen;
     private Evenement evenement;
     private Taak taak;
     private Random fakeRandom;
@@ -36,13 +38,17 @@ public class EvenementControllerTest {
         taken = new ArrayList<>();
         taak = new Taak("taak", 5);
         evenement = new Evenement();
-        evenementController = new EvenementController();
+        evenementController = Mockito.mock(EvenementController.class);
         fakeRandom = Mockito.mock(Random.class);
         Mockito.when(fakeRandom.nextInt()).thenReturn(0);
 
         georganiseerdeEvenementen = new ArrayList<Evenement>();
         georganiseerdeEvenementen.add(new Evenement());
         georganiseerdeEvenementen.add(new Evenement());
+
+        gevondenEvenementen = new ArrayList<Evenement>();
+        gevondenEvenementen.add(new Evenement());
+        gevondenEvenementen.add(new Evenement());
     }
 
     @Test
@@ -79,4 +85,10 @@ public class EvenementControllerTest {
 
     }
 
+    @Test
+    public void zoekEvenementenTest(){
+        Mockito.when(evenementController.zoekEvenementen("test")).thenReturn(new ResponseEntity<List<Evenement>>(gevondenEvenementen, HttpStatus.OK));
+        List<Evenement> result = evenementController.zoekEvenementen("test").getBody();
+        Assertions.assertEquals(result, gevondenEvenementen);
+    }
 }
