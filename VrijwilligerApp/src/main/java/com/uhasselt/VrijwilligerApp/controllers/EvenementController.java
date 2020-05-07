@@ -14,9 +14,13 @@ import java.util.List;
 
 @RestController
 public class EvenementController {
-    //private IEvenementRepository evenementRepository;
+
     @Autowired
-    private IEvenementService evenementService; //=new EvenementService(evenementRepository);
+    private IEvenementService evenementService;
+
+    public EvenementController(IEvenementService iEvenementService){
+        evenementService=iEvenementService;
+    }
 
     @CrossOrigin
     @GetMapping(path = {"/evenement/{id}"})
@@ -41,13 +45,8 @@ public class EvenementController {
     @ResponseBody
     @PostMapping(path = {"/evenement/zoekEvenementen"})
     public ResponseEntity<List<Evenement>> zoekEvenementen(@RequestBody String naamEvenement ){
+        List<Evenement> gevondenEvenementen = evenementService.getEvenementen(naamEvenement);
 
-//        List<Evenement> evenementen = evenementService.findByName(naamEvenement);
-//        return new ResponseEntity<List<Evenement>>(evenementen, HttpStatus.OK);
-
-//        List<Evenement> evenementen=new ArrayList<Evenement>();
-//        return new ResponseEntity<List<Evenement>>(evenementen, HttpStatus.OK);
-
-        return null;
+        return new ResponseEntity<List<Evenement>>(gevondenEvenementen,HttpStatus.OK);
     }
 }

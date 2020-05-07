@@ -38,7 +38,7 @@ public class EvenementControllerTest {
         taken = new ArrayList<>();
         taak = new Taak("taak", 5);
         evenement = new Evenement();
-        evenementController = Mockito.mock(EvenementController.class);
+        evenementController = new EvenementController(evenementService);
         fakeRandom = Mockito.mock(Random.class);
         Mockito.when(fakeRandom.nextInt()).thenReturn(0);
 
@@ -87,7 +87,7 @@ public class EvenementControllerTest {
 
     @Test
     public void zoekEvenementenTest(){
-        Mockito.when(evenementController.zoekEvenementen("test")).thenReturn(new ResponseEntity<List<Evenement>>(gevondenEvenementen, HttpStatus.OK));
+        Mockito.when(evenementService.getEvenementen("test")).thenReturn(gevondenEvenementen);
         List<Evenement> result = evenementController.zoekEvenementen("test").getBody();
         Assertions.assertEquals(result, gevondenEvenementen);
     }
