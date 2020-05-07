@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface EvenementRepository extends JpaRepository<Evenement, Long> {
+public interface IEvenementRepository extends JpaRepository<Evenement, Long> {
 
     @Query("Select e from Evenement e where e.naam like %:naamEvenement%")
     List<Evenement> findByName(String naamEvenement);

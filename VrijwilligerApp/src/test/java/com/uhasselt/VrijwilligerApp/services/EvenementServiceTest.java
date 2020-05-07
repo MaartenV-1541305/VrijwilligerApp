@@ -1,17 +1,15 @@
 package com.uhasselt.VrijwilligerApp.services;
 
+import com.uhasselt.VrijwilligerApp.interfaces.IEvenementService;
 import com.uhasselt.VrijwilligerApp.models.Evenement;
-import com.uhasselt.VrijwilligerApp.repository.EvenementRepository;
-import org.junit.Assert;
+import com.uhasselt.VrijwilligerApp.repository.IEvenementRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.query.InvalidJpaQueryMethodException;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -19,18 +17,18 @@ import java.util.Random;
 public class EvenementServiceTest {
 
     @Autowired
-    private EvenementService evenementService;
+    private IEvenementService evenementService;
 
     @Autowired
-    private EvenementRepository repository;
+    private IEvenementRepository repository;
     private Random fakeRandom;
     private List<Evenement> georganiseerdeEvenementen;
 
     @Before
     public void setUp(){
-        evenementService = new EvenementService();
-        repository = Mockito.mock(repository.getClass());
 
+        repository = Mockito.mock(IEvenementRepository.class);
+        evenementService = new EvenementService(repository);
         fakeRandom = Mockito.mock(Random.class);
         Mockito.when(fakeRandom.nextInt()).thenReturn(0);
 
