@@ -80,10 +80,19 @@ public class EvenementServiceTest {
 
 
     @Test
-    public void getEvenementenTest(){
+    public void getEvenementenOpNaamTest(){
         Mockito.when(repository.selectEvenementen("test")).thenReturn(gevondenEvenementen);
 
         List<Evenement> result = evenementService.getEvenementen("test");
+
+        Assertions.assertEquals(result, gevondenEvenementen);
+    }
+
+    @Test
+    public void getEvenementenOpStadEnRadiusTest(){
+        Mockito.when(repository.selectEvenementen("stad",150)).thenReturn(gevondenEvenementen);
+
+        List<Evenement> result = evenementService.getEvenementen("stad",150);
 
         Assertions.assertEquals(result, gevondenEvenementen);
     }

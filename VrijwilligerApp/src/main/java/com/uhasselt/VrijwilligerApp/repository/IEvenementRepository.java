@@ -14,6 +14,8 @@ public interface IEvenementRepository extends JpaRepository<Evenement, Long> {
 
     List<Evenement> selectEvenementen(String naamEvenement);
 
+    List<Evenement> selectEvenementen(String stad,double radius);
+
     Evenement selectEvenement(long evenementId);
 
 }

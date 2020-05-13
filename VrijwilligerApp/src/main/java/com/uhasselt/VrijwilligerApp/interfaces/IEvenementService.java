@@ -10,5 +10,6 @@ public interface IEvenementService {
     List<Evenement> getAllGeorganiseerdeEvenementen(int accountId);
     Evenement save(Evenement nieuwEvenement);
     List<Evenement> getEvenementen(String naamEvenement);
+    List<Evenement> getEvenementen(String stad, double radius);
     Evenement getEvenement(long evenementId);
 }
