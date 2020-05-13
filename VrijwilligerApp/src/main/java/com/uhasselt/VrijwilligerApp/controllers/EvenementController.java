@@ -52,6 +52,15 @@ public class EvenementController {
 
     @CrossOrigin
     @ResponseBody
+    @PostMapping(path = {"/evenement/zoekEvenementen"})
+    public ResponseEntity<List<Evenement>> zoekEvenementen(@RequestBody String stad,double radius ){
+        List<Evenement> gevondenEvenementen = evenementService.getEvenementen(stad,radius);
+
+        return new ResponseEntity<List<Evenement>>(gevondenEvenementen,HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @ResponseBody
     @PostMapping(path = {"/evenement/detailsEvenementOpvragen"})
     public ResponseEntity<Evenement> detailsEvenementOpvragen(@RequestBody long evenementId ){
         Evenement gevondenEvenement = evenementService.getEvenement(evenementId);
