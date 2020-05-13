@@ -12,4 +12,5 @@ public interface IEvenementService {
     List<Evenement> getEvenementen(String naamEvenement);
     List<Evenement> getEvenementen(String stad, double radius);
     Evenement getEvenement(long evenementId);
+    void deleteEvenement(Evenement evenement);
 }

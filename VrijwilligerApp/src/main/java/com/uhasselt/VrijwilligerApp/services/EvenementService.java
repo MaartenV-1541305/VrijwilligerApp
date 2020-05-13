@@ -47,4 +47,9 @@ public class EvenementService implements IEvenementService {
     public Evenement getEvenement(long evenementId) {
         return evenementRepository.selectEvenement(evenementId);
     }
+
+    @Override
+    public void deleteEvenement(Evenement evenement) {
+        evenementRepository.delete(evenement);
+    }
 }
