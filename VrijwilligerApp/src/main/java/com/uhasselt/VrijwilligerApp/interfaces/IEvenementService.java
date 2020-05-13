@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface IEvenementService {
     Evenement findByID(long id);
     List<Evenement> getAllGeorganiseerdeEvenementen(int accountId);
-    Evenement save(Evenement nieuwEvenement);
+    Evenement saveEvenement(Evenement nieuwEvenement);
     List<Evenement> getEvenementen(String naamEvenement);
     Evenement getEvenement(long evenementId);
 }

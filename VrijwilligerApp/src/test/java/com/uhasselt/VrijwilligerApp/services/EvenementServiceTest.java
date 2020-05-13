@@ -25,6 +25,8 @@ public class EvenementServiceTest {
     private List<Evenement> georganiseerdeEvenementen;
     private List<Evenement> gevondenEvenementen;
     private Evenement gevondenEvenement;
+    private Evenement nieuwEvenement;
+    private Evenement bewerktEvenement;
 
     @Before
     public void setUp(){
@@ -51,6 +53,14 @@ public class EvenementServiceTest {
         gevondenEvenementen.add(e2);
 
         gevondenEvenement=new Evenement();
+
+        nieuwEvenement = new Evenement();
+        nieuwEvenement.setNaam("nieuw evenement");
+        nieuwEvenement.setBeschrijving("beschrijving evenement");
+
+        bewerktEvenement = new Evenement();
+        bewerktEvenement.setNaam("bewerkt evenement");
+        bewerktEvenement.setBeschrijving("beschrijving bewerkt");
 
     }
 
@@ -96,4 +106,29 @@ public class EvenementServiceTest {
 
         Assertions.assertEquals(result, gevondenEvenement);
     }
+
+    @Test
+    public void insertEvenement(){
+        Mockito.when(repository.save(nieuwEvenement)).thenReturn(nieuwEvenement);
+
+        Evenement result = evenementService.saveEvenement(nieuwEvenement);
+
+        Assertions.assertNotEquals(result.getId(), 0L);
+        Assertions.assertEquals(result.getNaam(), "nieuw evenement");
+        Assertions.assertEquals(result.getBeschrijving(), "beschrijving evenement");
+    }
+
+    @Test
+    public void updateEvenement(){
+        Mockito.when(repository.save(nieuwEvenement)).thenReturn(nieuwEvenement);
+        Mockito.when(repository.save(bewerktEvenement)).thenReturn(bewerktEvenement);
+
+        Evenement resultOld = evenementService.saveEvenement(nieuwEvenement);
+        Evenement resultUpdate = evenementService.saveEvenement(bewerktEvenement);
+
+        Assertions.assertEquals(resultOld.getId(), resultUpdate.getId());
+        Assertions.assertNotEquals(resultUpdate.getBeschrijving(), resultOld.getBeschrijving());
+        Assertions.assertNotEquals(resultUpdate.getNaam(), resultOld.getNaam());
+    }
+
 }

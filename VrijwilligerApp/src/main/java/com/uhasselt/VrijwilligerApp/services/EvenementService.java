@@ -29,7 +29,7 @@ public class EvenementService implements IEvenementService {
     }
 
     @Override
-    public Evenement save(Evenement nieuwEvenement) {
+    public Evenement saveEvenement(Evenement nieuwEvenement) {
         return evenementRepository.save(nieuwEvenement);
     }
 
