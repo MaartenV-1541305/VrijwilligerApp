@@ -10,6 +10,8 @@ import com.uhasselt.VrijwilligerApp.models.Account;
 import com.uhasselt.VrijwilligerApp.models.Adres;
 import com.uhasselt.VrijwilligerApp.models.Groep;
 import com.uhasselt.VrijwilligerApp.models.GroepsLid;
+import com.uhasselt.VrijwilligerApp.repository.IGroepRepository;
+import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -28,13 +30,16 @@ public class GroepControllerTest {
     
     @Autowired
     private IGroepService groepService;
-
+    private IGroepRepository repository;
+    private Random fakeRandom;
     private Account eigenaar;
     private Account lid;
+    private GroepsLid groepsLid;
     private Groep groep;
     
     @Before
     public void setup() {
+        this.repository = Mockito.mock(IGroepRepository.class);
         this.groepService = Mockito.mock(IGroepService.class);
         
         this.eigenaar = new Account();
@@ -55,12 +60,21 @@ public class GroepControllerTest {
         this.lid.setPassword("GroepTest");
         this.lid.setAdres(adres);
         
-        this.groepController = new GroepController();
+        this.groepsLid = new GroepsLid();
+        this.groepsLid.setAccount(lid);
+        this.groepsLid.setGroep(groep);
+        this.groepsLid.setAdmin(false);
+        
+        this.groep.getLeden().add(groepsLid);
+        
+        this.groepController = new GroepController(this.groepService);
     }
     
     @Test
     @SuppressWarnings("null")
     public void groepAanmakenTest() {
+        Mockito.when(repository.save(this.groep)).thenReturn(this.groep);
+        
         @SuppressWarnings("LocalVariableHidesMemberVariable")
         ResponseEntity<Groep> groep = this.groepController.nieuwGroep("Groep 1", this.eigenaar);
         
@@ -77,6 +91,8 @@ public class GroepControllerTest {
     @Test
     @SuppressWarnings("null")
     public void zetBeschrijvingTest() {
+        Mockito.when(repository.updateBeschrijving(this.groep.getBeschrijving(), this.groep.getId())).thenReturn(this.groep);
+        
         @SuppressWarnings("LocalVariableHidesMemberVariable")
         ResponseEntity<Groep> groep = this.groepController.zetBeschrijving(this.groep, "Dit is een test omschrijving");
         
@@ -90,6 +106,8 @@ public class GroepControllerTest {
     @Test
     @SuppressWarnings("null")
     public void voegGroepsLidToeTest() {
+        Mockito.when(repository.voegGroepslidToe(this.lid, false, this.groep.getId())).thenReturn(groep);
+        
         @SuppressWarnings("LocalVariableHidesMemberVariable")
         ResponseEntity<Groep> groep = this.groepController.voegGroepsLidToe(this.groep, this.lid);
         

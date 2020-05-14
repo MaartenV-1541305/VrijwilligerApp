@@ -45,5 +45,15 @@ public class GroepService implements IGroepService {
     public List<Groep> findByName(String naamEvenement) {
         return groepRepository.findByName(naamEvenement);
     }
+
+    @Override
+    public void delete(Groep groep) {
+        this.groepRepository.delete(groep);
+    }
+
+    @Override
+    public Groep edit(Groep groep) {
+        return this.groepRepository.updateGroep(groep.getNaam(), groep.getBeschrijving(), groep.getId());
+    }
     
 }

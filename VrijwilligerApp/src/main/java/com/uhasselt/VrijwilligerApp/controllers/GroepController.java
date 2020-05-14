@@ -27,6 +27,10 @@ public class GroepController {
     @Autowired
     private IGroepService groepService;
 
+    public GroepController(IGroepService groepService) {
+        this.groepService = groepService;
+    }
+    
     @CrossOrigin
     @GetMapping(path = {"/groep"})
     public void getAllGroepen(){

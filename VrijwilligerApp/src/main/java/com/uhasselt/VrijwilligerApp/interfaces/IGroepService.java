@@ -15,6 +15,8 @@ import java.util.List;
 public interface IGroepService {
     public Groep findByID(long id);
     public Groep save(Groep nieuwGroep);
+    public void delete(Groep groep);
+    public Groep edit(Groep groep);
     public List<Groep> getAllGroepen(int accountId);
     public List<Groep> findByName(String naamEvenement);
 }
