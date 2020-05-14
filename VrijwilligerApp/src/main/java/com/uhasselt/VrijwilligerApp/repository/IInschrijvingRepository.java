@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface IInschrijvingRepository extends JpaRepository<Inschrijving, Long> {
     List<Inschrijving> getAllInschrijvingen(int accountId);
+    Inschrijving getInschrijving(int inschrijvingsId);
+    Inschrijving deleteInschrijving(int inschrijvingsId);
 }
