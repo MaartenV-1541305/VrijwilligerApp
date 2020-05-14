@@ -207,4 +207,11 @@ public class EvenementControllerTest {
         Assertions.assertEquals(result, gevondenEvenement);
     }
 
+    @Test
+    public void vraagToestemmingTest(){
+        Mockito.when(evenementService.getEvenement(1)).thenReturn(gevondenEvenement);
+        int statusCode = evenementController.vraagToestemming(1).getStatusCode().value();
+        Assertions.assertEquals(statusCode, 200);
+    }
+
 }

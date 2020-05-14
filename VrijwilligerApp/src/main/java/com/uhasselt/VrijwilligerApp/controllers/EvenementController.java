@@ -156,4 +156,11 @@ public class EvenementController {
 
         return new ResponseEntity<Evenement>(gevondenEvenement,HttpStatus.OK);
     }
+
+    @CrossOrigin
+    @ResponseBody
+    @PostMapping(path = {"/evenement/vraagToestemming"})
+    public ResponseEntity vraagToestemming(@RequestBody long evenementId ){
+        return null;
+    }
 }
