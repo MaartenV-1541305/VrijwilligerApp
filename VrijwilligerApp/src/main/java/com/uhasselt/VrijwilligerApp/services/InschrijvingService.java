@@ -32,7 +32,7 @@ public class InschrijvingService implements IInschrijvingService {
         }
 
     @Override
-    public boolean putAanwezigheid(int inschrijvingsId, boolean aanwezigheid) {
+    public boolean putAanwezigheid(long inschrijvingsId, boolean aanwezigheid) {
         return inschrijvingRepository.updateAanwezigheid(inschrijvingsId,aanwezigheid);
     }
 
