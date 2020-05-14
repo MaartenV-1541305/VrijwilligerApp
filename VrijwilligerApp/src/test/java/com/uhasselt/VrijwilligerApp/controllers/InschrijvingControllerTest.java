@@ -40,6 +40,7 @@ public class InschrijvingControllerTest {
         inschrijvingen.add(inschr2);
 
         inschrijvingService= Mockito.mock(IInschrijvingService.class);
+        fakeRandom = Mockito.mock(Random.class);
         Mockito.when(fakeRandom.nextInt()).thenReturn(0);
 
     }
@@ -77,12 +78,23 @@ public class InschrijvingControllerTest {
         Assertions.assertEquals(statusCode, 200);
     }
     @Test
-    public void getInschrijving(int inschrijvingsId){
+    public void getInschrijving(){
         Mockito.when(inschrijvingService.getInschrijving(1)).thenReturn(null);
         Inschrijving result = controller.getInschrijving(1).getBody();
 
         Assertions.assertEquals(result, null);
     }
+
+    @Test
+    public void isAanwezigTest(){
+        Mockito.when(inschrijvingService.putAanwezigheid(1,true)).thenReturn(null);
+        int statusCode = controller.isAanwezig(1,true).getStatusCode().value();
+
+        Mockito.verify(inschrijvingService).putAanwezigheid(1,true);
+        Assertions.assertEquals(statusCode, 200);
+    }
+
+
 
     // @Test
     // public void deleteInschrijving(int inschrijvingsId){

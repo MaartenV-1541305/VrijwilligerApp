@@ -31,7 +31,12 @@ public class InschrijvingService implements IInschrijvingService {
             return inschrijvingRepository.getInschrijving(inschrijvingsId);
         }
 
-        // @Override
+    @Override
+    public boolean putAanwezigheid(int inschrijvingsId, boolean aanwezigheid) {
+        return inschrijvingRepository.updateAanwezigheid(inschrijvingsId,aanwezigheid);
+    }
+
+    // @Override
         // public Inschrijving deleteInschrijving(int inschrijvingsId) {
         //     return inschrijvingRepository.deleteInschrijving(inschrijvingsId) ;
         // }

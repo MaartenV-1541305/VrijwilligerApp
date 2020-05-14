@@ -24,4 +24,8 @@ public class InschrijvingController {
     public ResponseEntity deleteInschrijving(int id){
         return null;
     }
+
+    public ResponseEntity isAanwezig(long inschrijvingsId, boolean aanwezigheid){
+        return null;
+    }
 }
