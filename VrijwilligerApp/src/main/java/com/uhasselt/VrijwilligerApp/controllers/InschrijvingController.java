@@ -12,7 +12,11 @@ import java.util.List;
 public class InschrijvingController {
     @Autowired
     private IInschrijvingService inschrijvingService;
-    
+
+    public  ResponseEntity<Inschrijving> getInschrijving(int id){
+        return null;
+
+    }
     public ResponseEntity<List<Inschrijving>> getInschrijvingenByAccount(int id){
         return null;
     }

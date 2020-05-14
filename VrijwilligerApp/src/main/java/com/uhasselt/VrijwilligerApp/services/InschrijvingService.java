@@ -13,67 +13,70 @@ public class InschrijvingService implements IInschrijvingService {
     @Autowired
     private IInschrijvingRepository inschrijvingRepository;
 
-    public InschrijvingService(IInschrijvingRepository repository){
+    public InschrijvingService(IInschrijvingRepository repository) {
         this.inschrijvingRepository = repository;
     }
 
     @Override
     public List<Inschrijving> getAllInschrijvingenByAccountId(int id) {
-        return inschrijvingRepository.getAllInschrijvingen(id) ;
+        return inschrijvingRepository.getAllInschrijvingen(id);
     }
 
     @Override
     public boolean deleteInschrijving(int inschrijvingsId) {
         return true;
-    public Inschrijving getInschrijving(int inschrijvingsId) {
-        return inschrijvingRepository.getInschrijving(inschrijvingsId) ;
     }
 
-    // @Override
-    // public Inschrijving deleteInschrijving(int inschrijvingsId) {
-    //     return inschrijvingRepository.deleteInschrijving(inschrijvingsId) ;
-    // }
+        public Inschrijving getInschrijving ( int inschrijvingsId){
+            return inschrijvingRepository.getInschrijving(inschrijvingsId);
+        }
 
-    @Override
-    public Inschrijving koppelInschrijvingMetAccountEnEvenement(long accountId, long EvenementId) {
-        Inschrijving inschrijving = new Inschrijving();
-        //inschrijving.setAccount();
-        //inschrijving.setEvenement();
-        return inschrijvingRepository.save(inschrijving);
+        // @Override
+        // public Inschrijving deleteInschrijving(int inschrijvingsId) {
+        //     return inschrijvingRepository.deleteInschrijving(inschrijvingsId) ;
+        // }
+
+        @Override
+        public Inschrijving koppelInschrijvingMetAccountEnEvenement ( long accountId, long EvenementId){
+            Inschrijving inschrijving = new Inschrijving();
+            //inschrijving.setAccount();
+            //inschrijving.setEvenement();
+            return inschrijvingRepository.save(inschrijving);
+        }
+
+        @Override
+        public Inschrijving voegTaakToe (Taak taak,long inschrijvingId){
+            Inschrijving inschrijving = inschrijvingRepository.findById(inschrijvingId).get();
+
+            return inschrijvingRepository.save(inschrijving);
+        }
+
+        @Override
+        public Inschrijving verwijderTaak ( long taakId, long inschrijvingId){
+            Inschrijving inschrijving = inschrijvingRepository.findById(inschrijvingId).get();
+
+            return inschrijvingRepository.save(inschrijving);
+        }
+
+        @Override
+        public Inschrijving voegBenodigheidToe (Benodigheid benodigheid,long inschrijvingId){
+            Inschrijving inschrijving = inschrijvingRepository.findById(inschrijvingId).get();
+
+            return inschrijvingRepository.save(inschrijving);
+        }
+
+        @Override
+        public Inschrijving verwijderBenodigheid ( long benodigheidId, long inschrijvingId){
+            Inschrijving inschrijving = inschrijvingRepository.findById(inschrijvingId).get();
+
+            return inschrijvingRepository.save(inschrijving);
+        }
+
+        @Override
+        public Inschrijving schrijfInVoorEvenement ( long groepID, long inschrijvingId){
+            Inschrijving inschrijving = inschrijvingRepository.findById(inschrijvingId).get();
+
+            return inschrijvingRepository.save(inschrijving);
+        }
     }
 
-    @Override
-    public Inschrijving voegTaakToe(Taak taak, long inschrijvingId) {
-        Inschrijving inschrijving = inschrijvingRepository.findById(inschrijvingId).get();
-
-        return inschrijvingRepository.save(inschrijving);
-    }
-
-    @Override
-    public Inschrijving verwijderTaak(long taakId, long inschrijvingId) {
-        Inschrijving inschrijving = inschrijvingRepository.findById(inschrijvingId).get();
-
-        return inschrijvingRepository.save(inschrijving);
-    }
-
-    @Override
-    public Inschrijving voegBenodigheidToe(Benodigheid benodigheid, long inschrijvingId) {
-        Inschrijving inschrijving = inschrijvingRepository.findById(inschrijvingId).get();
-
-        return inschrijvingRepository.save(inschrijving);
-    }
-
-    @Override
-    public Inschrijving verwijderBenodigheid(long benodigheidId, long inschrijvingId) {
-        Inschrijving inschrijving = inschrijvingRepository.findById(inschrijvingId).get();
-
-        return inschrijvingRepository.save(inschrijving);
-    }
-
-    @Override
-    public Inschrijving schrijfInVoorEvenement(long groepID, long inschrijvingId) {
-        Inschrijving inschrijving = inschrijvingRepository.findById(inschrijvingId).get();
-
-        return inschrijvingRepository.save(inschrijving);
-    }
-}
