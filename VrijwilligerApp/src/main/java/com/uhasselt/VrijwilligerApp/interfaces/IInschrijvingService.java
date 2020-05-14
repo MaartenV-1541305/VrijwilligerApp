@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface IInschrijvingService {
     List<Inschrijving> getAllInschrijvingenByAccountId(int id);
-}
+    boolean deleteInschrijving(int inschrijvingsId);
+
 }

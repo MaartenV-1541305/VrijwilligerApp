@@ -12,11 +12,9 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.query.InvalidJpaQueryMethodException;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
+//inschrijvingService
 public class Inschrijvingtest {
     @Autowired
     private IInschrijvingService inschrijvingService;
@@ -70,6 +68,16 @@ public class Inschrijvingtest {
         List<Inschrijving> result = inschrijvingService.getAllInschrijvingenByAccountId(-5);
 
         Assertions.assertEquals(result, null);
+    }
+
+    @Test
+    public void deleteInschrijvingWithId(){
+        inschrijvingService.deleteInschrijving(fakeRandom.nextInt());
+        Mockito.when(repository.findById(0L)).thenReturn(null);
+
+        Inschrijving result = repository.findById(0L).get();
+
+        Assert.assertNull(result);
     }
 }
 

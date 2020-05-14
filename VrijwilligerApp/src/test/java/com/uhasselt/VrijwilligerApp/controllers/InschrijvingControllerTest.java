@@ -4,6 +4,7 @@ import com.uhasselt.VrijwilligerApp.interfaces.IInschrijvingService;
 import com.uhasselt.VrijwilligerApp.models.Account;
 import com.uhasselt.VrijwilligerApp.models.Inschrijving;
 import org.junit.Assert;
+import org.mockito.verification.VerificationMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -43,7 +44,6 @@ public class InschrijvingControllerTest {
 
     }
 
-    //taak wss rood omdat controller null terug geeft.
     @Test
     public void getInschrijvingByAccountIdTest() throws Exception {
         Mockito.when(inschrijvingService.getAllInschrijvingenByAccountId(fakeRandom.nextInt())).thenReturn(inschrijvingen);
@@ -66,5 +66,14 @@ public class InschrijvingControllerTest {
         Assertions.assertEquals(result, null);
 
 
+    }
+
+    @Test
+    public void deleteInschrijvingenByInschrijvingId(){
+        Mockito.when(inschrijvingService.deleteInschrijving(fakeRandom.nextInt())).thenReturn(true);
+        int statusCode = controller.deleteInschrijving(fakeRandom.nextInt()).getStatusCode().value();
+
+        Mockito.verify(inschrijvingService).deleteInschrijving(1);
+        Assertions.assertEquals(statusCode, 200);
     }
 }
