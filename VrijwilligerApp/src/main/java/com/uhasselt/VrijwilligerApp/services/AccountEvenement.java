@@ -9,21 +9,25 @@ public class AccountEvenement implements IAccountService {
     @Autowired
     private IAccountRepository IAccountRepository;
 
-
-    @Override
-    public Account save(Account nieuwAccount) {
-
-        return IAccountRepository.save(nieuwAccount);
-    }
-
     @Override
     public Account selectAccount(String email, String password) {
         return null;
     }
 
     @Override
-    public void insertAccount(String email, String ww, String bevest_ww, String nm, String vnm, String stad) {
+    public Account insertAccount(String email, String ww, String bevest_ww, String nm, String vnm, String stad) {
 
+        return null;
+    }
+
+    @Override
+    public Account inloggen(String email, String password) {
+        return null;
+    }
+
+    @Override
+    public Account aanmakenAccount(String email, String ww, String bevest_ww, String nm, String vnm, String stad) {
+        return null;
     }
 
 }

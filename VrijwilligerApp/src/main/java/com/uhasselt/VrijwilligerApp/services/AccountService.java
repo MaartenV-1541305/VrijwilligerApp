@@ -16,26 +16,22 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public Account save(Account nieuwAccount) {
-        return null;
-    }
-
-    @Override
     public Account selectAccount(String email, String password) {
         return accountRepository.selectAccount(email, password);
     }
-/*
-    @Override
-    public Account selectAccount(String email, String password) {
-        Account acc = new Account();
-        acc.setEmail("test@test.be");
-        acc.setPassword("test");
-        acc.setNaam("testNaam");
-        return acc;
-    }
-*/
-    @Override
-    public void insertAccount(String email, String ww, String bevest_ww, String nm, String vnm, String stad) {
 
+    @Override
+    public Account insertAccount(String email, String ww, String bevest_ww, String nm, String vnm, String stad) {
+        return accountRepository.insertAccount(email, ww, bevest_ww, nm, vnm, stad);
+    }
+
+    @Override
+    public Account inloggen(String email, String password) {
+        return accountRepository.inloggen(email, password);
+    }
+
+    @Override
+    public Account aanmakenAccount(String email, String ww, String bevest_ww, String nm, String vnm, String stad) {
+        return accountRepository.aanmakenAccount(email, ww, bevest_ww, nm, vnm, stad);
     }
 }

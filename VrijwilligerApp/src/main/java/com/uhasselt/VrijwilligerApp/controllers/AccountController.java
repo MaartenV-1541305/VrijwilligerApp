@@ -1,5 +1,6 @@
 package com.uhasselt.VrijwilligerApp.controllers;
 
+import com.uhasselt.VrijwilligerApp.interfaces.IAccountService;
 import com.uhasselt.VrijwilligerApp.models.Account;
 import com.uhasselt.VrijwilligerApp.models.Adres;
 import com.uhasselt.VrijwilligerApp.models.Taak;
@@ -12,10 +13,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 public class AccountController {
 
+    private IAccountService service;
+
+    public AccountController(IAccountService accountService){
+        service = accountService;
+    }
+
     @CrossOrigin
     @ResponseBody
     @PostMapping(path = {"/account"})
-    public ResponseEntity<Account> nieuwAccount(String nm, String vnm, String email, String pw, String bevestPw, Adres adres) {
+    public ResponseEntity<Account> nieuwAccount(String nm, String vnm, String email, String pw, String bevestPw, String adres) {
+        /*
         //TODO: Email checken.
         //TODO: Syntax email.
         if (pw.equals(bevestPw)) {
@@ -31,8 +39,17 @@ public class AccountController {
             System.out.println("Wachtwoorden komen niet overeen!");
 
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
-        }
-
-
+        }*/
+        Account account = service.aanmakenAccount(nm, vnm, email, pw, bevestPw, adres);
+        return new ResponseEntity<Account>(account, HttpStatus.OK);
     }
+
+    @CrossOrigin
+    @ResponseBody
+    @PostMapping(path = {"/account/"})
+    public ResponseEntity<Account> inloggen(String email, String wachtwoord){
+        Account account = service.inloggen(email, wachtwoord);
+        return new ResponseEntity<Account>(account, HttpStatus.OK);
+    }
+
 }

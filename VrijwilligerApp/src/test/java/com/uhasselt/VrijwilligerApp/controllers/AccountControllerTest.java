@@ -21,34 +21,45 @@ public class AccountControllerTest {
 
     @Autowired
     private IAccountService accountService;
-
-    private Account account;
     private Adres adres;
+    private Account account;
 
     @Before
     public void setUp() {
         accountService = Mockito.mock(IAccountService.class);
         adres = new Adres();
         adres.setGemeente("Hasselt");
-        adres.setPostcode("3550"); // postcode int veranderen?
+        adres.setPostcode("3550");
 
-        accountController = new AccountController();
+        accountController = new AccountController(accountService);
+        account = new Account();
     }
 
     @Test
     public void nieuwAccountTest() {
+        Mockito.when(accountService.aanmakenAccount("Doe", "John", "s@a.be", "password123", "password123", "hasselt")).thenReturn(account);
+        ResponseEntity<Account> result = accountController.nieuwAccount("Doe", "John", "s@a.be", "password123", "password123", "hasselt");
+        Assertions.assertEquals(result.getStatusCode().value(), 200);
+        /*
         ResponseEntity<Account> account = accountController.nieuwAccount("Doe", "John", "s@a.be", "password123", "password123", adres);
-        //TODO: Beter vergelijking vn verschillende mogelijkheden.
         int status = account.getStatusCode().value();
         Account result = account.getBody();
-        //als passwords niet gelijk.
-        //Assertions.assertEquals(status, 403);
 
         Assertions.assertEquals(status, 200);
-
         if (result != null) {
             Assertions.assertEquals(result.getVoornaam(), "John");
         }
-
+        */
     }
+
+    @Test
+    public void inloggenTest(){
+        Mockito.when(accountService.inloggen("test@test.be", "password")).thenReturn(account);
+        ResponseEntity<Account> result = accountController.inloggen("test@test.be", "password");
+
+        Assertions.assertEquals(result.getStatusCode().value(), 200);
+        //kan eventueel uitbreiden en meerde var test.
+    }
+
+
 }
