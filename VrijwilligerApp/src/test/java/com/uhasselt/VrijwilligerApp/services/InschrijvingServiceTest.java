@@ -151,9 +151,21 @@ public class InschrijvingServiceTest {
     @Test
     public void deleteInschrijving(int inschrijvingsId){
         Mockito.when(repository.deleteInschrijving(1)).thenReturn(null);
-        Inschrijving result = inschrijvingService.deleteInschrijving(1);
+        //Inschrijving result = inschrijvingService.deleteInschrijving(1);
 
-        Assertions.assertEquals(result, null);
+        //Assertions.assertEquals(result, null);
+    }
+
+
+
+    @Test
+    public void deleteInschrijvingWithId(){
+        inschrijvingService.deleteInschrijving(fakeRandom.nextInt());
+        Mockito.when(repository.findById(0L)).thenReturn(null);
+
+        Inschrijving result = repository.findById(0L).get();
+
+        Assert.assertNull(result);
     }
 }
 
