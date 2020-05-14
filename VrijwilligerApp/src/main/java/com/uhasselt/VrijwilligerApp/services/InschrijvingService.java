@@ -23,6 +23,16 @@ public class InschrijvingService implements IInschrijvingService {
     }
 
     @Override
+    public Inschrijving getInschrijving(int inschrijvingsId) {
+        return inschrijvingRepository.getInschrijving(inschrijvingsId) ;
+    }
+
+    @Override
+    public Inschrijving deleteInschrijving(int inschrijvingsId) {
+        return inschrijvingRepository.deleteInschrijving(inschrijvingsId) ;
+    }
+
+    @Override
     public Inschrijving koppelInschrijvingMetAccountEnEvenement(long accountId, long EvenementId) {
         Inschrijving inschrijving = new Inschrijving();
         //inschrijving.setAccount();

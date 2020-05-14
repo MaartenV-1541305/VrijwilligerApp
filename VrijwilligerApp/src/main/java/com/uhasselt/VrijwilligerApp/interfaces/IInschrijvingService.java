@@ -15,4 +15,7 @@ public interface IInschrijvingService {
     Inschrijving voegBenodigheidToe(Benodigheid benodigheid, long inschrijvingId);
     Inschrijving verwijderBenodigheid(long benodigheidId, long inschrijvingId);
     Inschrijving schrijfInVoorEvenement(long groepID, long inschrijvingId);
+    Inschrijving getInschrijving(int inschrijvingsId);
+    Inschrijving deleteInschrijving(int inschrijvingsId);
 }
+
