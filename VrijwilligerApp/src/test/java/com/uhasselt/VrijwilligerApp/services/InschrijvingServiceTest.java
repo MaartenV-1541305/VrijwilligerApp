@@ -2,7 +2,9 @@ package com.uhasselt.VrijwilligerApp.services;
 
 import com.uhasselt.VrijwilligerApp.interfaces.IInschrijvingService;
 import com.uhasselt.VrijwilligerApp.models.Account;
+import com.uhasselt.VrijwilligerApp.models.Benodigheid;
 import com.uhasselt.VrijwilligerApp.models.Inschrijving;
+import com.uhasselt.VrijwilligerApp.models.Taak;
 import com.uhasselt.VrijwilligerApp.repository.IInschrijvingRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,7 +19,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-public class Inschrijvingtest {
+public class InschrijvingServiceTest {
     @Autowired
     private IInschrijvingService inschrijvingService;
 
@@ -70,6 +72,73 @@ public class Inschrijvingtest {
         List<Inschrijving> result = inschrijvingService.getAllInschrijvingenByAccountId(-5);
 
         Assertions.assertEquals(result, null);
+    }
+
+    @Test
+    public void koppelInschrijvingMetAccountEnEvenementTest(){
+        Inschrijving inschrijving = new Inschrijving();
+        Mockito.when(repository.save(inschrijving)).thenReturn(inschrijving);
+
+        Inschrijving result = inschrijvingService.koppelInschrijvingMetAccountEnEvenement(1, 1);
+
+        Assertions.assertNotEquals(result.getId(), 0);
+        Assertions.assertEquals(result.getAccount().getId(), 1);
+        Assertions.assertEquals(result.getEvenement().getId(), 1);
+    }
+
+    @Test
+    public void voegTaakToeTest(){
+        Inschrijving inschrijving = new Inschrijving();
+        Taak taak = new Taak();
+        Mockito.when(repository.save(inschrijving)).thenReturn(inschrijving);
+
+        Inschrijving result = inschrijvingService.voegTaakToe(taak, 1);
+
+        Assertions.assertEquals(result.getTaak(), taak);
+    }
+
+    @Test
+    public void verwijderTaakTest(){
+        Inschrijving inschrijving = new Inschrijving();
+        Mockito.when(repository.save(inschrijving)).thenReturn(inschrijving);
+
+        Inschrijving result = inschrijvingService.verwijderTaak(1, 1);
+
+        Assertions.assertNull(result.getTaak());
+    }
+
+    @Test
+    public void voegBenodigheidToeTest(){
+        Inschrijving inschrijving = new Inschrijving();
+        Benodigheid benodigheid = new Benodigheid();
+        Mockito.when(repository.save(inschrijving)).thenReturn(inschrijving);
+
+        Inschrijving result = inschrijvingService.voegBenodigheidToe(benodigheid, 1);
+
+
+        Assertions.assertTrue(result.getBenodigheden().contains(benodigheid));
+
+    }
+
+    @Test
+    public void verwijderBenodigheidTest(){
+        Inschrijving inschrijving = new Inschrijving();
+        Benodigheid benodigheid = new Benodigheid();
+        Mockito.when(repository.save(inschrijving)).thenReturn(inschrijving);
+
+        Inschrijving result = inschrijvingService.verwijderBenodigheid(benodigheid.getId(), 1);
+
+        Assertions.assertFalse(result.getBenodigheden().contains(benodigheid));
+    }
+
+    @Test
+    public void schrijfInVoorEvenementTest(){
+        Inschrijving inschrijving = new Inschrijving();
+        Mockito.when(repository.save(inschrijving)).thenReturn(inschrijving);
+
+        Inschrijving result = inschrijvingService.schrijfInVoorEvenement(1, 1);
+
+        //Assertions.assertEquals(result);
     }
 }
 
