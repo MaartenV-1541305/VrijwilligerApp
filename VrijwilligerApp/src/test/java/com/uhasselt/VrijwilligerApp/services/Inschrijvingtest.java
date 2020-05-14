@@ -71,6 +71,21 @@ public class Inschrijvingtest {
 
         Assertions.assertEquals(result, null);
     }
+
+    @Test
+    public void getInschrijving(int inschrijvingsId){
+        Mockito.when(repository.getInschrijving(1)).thenReturn(null);
+        Inschrijving result = inschrijvingService.getInschrijving(1);
+
+        Assertions.assertEquals(result, null);
+    }
+    @Test
+    public void deleteInschrijving(int inschrijvingsId){
+        Mockito.when(repository.deleteInschrijving(1)).thenReturn(null);
+        Inschrijving result = inschrijvingService.deleteInschrijving(1);
+
+        Assertions.assertEquals(result, null);
+    }
 }
 
 

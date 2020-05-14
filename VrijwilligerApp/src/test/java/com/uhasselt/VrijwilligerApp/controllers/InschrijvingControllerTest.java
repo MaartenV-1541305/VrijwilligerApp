@@ -67,4 +67,20 @@ public class InschrijvingControllerTest {
 
 
     }
+    @Test
+    public void getInschrijving(int inschrijvingsId){
+        Mockito.when(inschrijvingService.getInschrijving(1)).thenReturn(null);
+        Inschrijving result = controller.getInschrijving(1).getBody();
+
+        Assertions.assertEquals(result, null);
+    }
+
+    @Test
+    public void deleteInschrijving(int inschrijvingsId){
+        Mockito.when(inschrijvingService.deleteInschrijving(1)).thenReturn(null);
+        Inschrijving result = controller.deleteInschrijving(1).getBody();
+
+        Assertions.assertEquals(result, null);
+    }
+
 }

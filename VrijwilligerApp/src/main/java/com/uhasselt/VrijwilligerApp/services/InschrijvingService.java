@@ -19,4 +19,12 @@ public class InschrijvingService implements IInschrijvingService {
     public List<Inschrijving> getAllInschrijvingenByAccountId(int id) {
         return inschrijvingRepository.getAllInschrijvingen(id) ;
     }
+    @Override
+    public Inschrijving getInschrijving(int inschrijvingsId) {
+        return inschrijvingRepository.getInschrijving(inschrijvingsId) ;
+    }
+    @Override
+    public Inschrijving deleteInschrijving(int inschrijvingsId) {
+        return inschrijvingRepository.deleteInschrijving(inschrijvingsId) ;
+    }
 }
