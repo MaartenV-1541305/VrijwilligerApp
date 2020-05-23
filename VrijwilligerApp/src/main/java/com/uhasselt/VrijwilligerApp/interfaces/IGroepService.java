@@ -25,4 +25,5 @@ public interface IGroepService {
     public List<Groep> getAllGroepenOfAccount(long accountId);
     public List<Groep> findByName(String naamEvenement);
     public List<Groep> getAllGroepen();
+    public List<GroepsLid> getAllGroepsLedenFromGroep(Groep groep);
 }

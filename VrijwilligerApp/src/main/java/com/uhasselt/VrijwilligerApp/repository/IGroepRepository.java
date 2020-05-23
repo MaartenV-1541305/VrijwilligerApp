@@ -54,4 +54,7 @@ public interface IGroepRepository extends JpaRepository<Groep, Long> {
     @Query("update groepslid g set g.isAdmin = 0 where g.id = ?2")
     Groep verwijderAdmin(long groepsLidId , long groepId);
     
+    @Query("select * from groepslid g where g.groep = ?1")
+    List<GroepsLid> getAllGroepsLedenFromGroep(long groepId);
+    
 }

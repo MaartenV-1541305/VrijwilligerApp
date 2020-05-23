@@ -81,5 +81,12 @@ public class GroepService implements IGroepService {
     public Groep zetEigenaar(GroepsLid lid, Groep groep) {
         return this.groepRepository.updateEigenaar(lid, groep.getId());
     }
+
+    @Override
+    public List<GroepsLid> getAllGroepsLedenFromGroep(Groep groep) {
+        return this.groepRepository.getAllGroepsLedenFromGroep(groep.getId());
+    }
+    
+    
     
 }

@@ -35,8 +35,10 @@ public class GroepServiceTest {
     private IGroepRepository repository;
     private Random fakeRandom;
     private Account eigenaar;
+    private Account admin;
     private Account lid;
     private GroepsLid groepsLid;
+    private GroepsLid adminLid;
     private Groep groep;
     private Groep groepNieuw;
     private List<Groep> gevondenGroepen;
@@ -70,6 +72,18 @@ public class GroepServiceTest {
         this.groepsLid.setGroep(groep);
         this.groepsLid.setAdmin(false);
         
+        this.admin = new Account();
+        this.admin.setVoornaam("Admin");
+        this.admin.setNaam("GroepTest");
+        this.admin.setEmail("Admin@groep.test");
+        this.admin.setPassword("GroepTest");
+        this.admin.setAdres(adres);
+        
+        this.adminLid = new GroepsLid();
+        this.adminLid.setAccount(lid);
+        this.adminLid.setGroep(groep);
+        this.adminLid.setAdmin(true);
+        
         this.groep = new Groep();
         this.groep.setNaam("groep1");
         this.groep.setBeschrijving("Besschrijving groep1");
@@ -83,15 +97,6 @@ public class GroepServiceTest {
         this.gevondenGroepen.add(groep);
 
     }
-    
-    @Test
-    public void getGroepOpNaamTest(){
-        Mockito.when(this.repository.findByName(this.groep.getNaam())).thenReturn(this.gevondenGroepen);
-
-        List<Groep> result = this.repository.findByName(this.groep.getNaam());
-
-        Assertions.assertEquals(result, this.gevondenGroepen);
-    }
 
     @Test
     public void insertGroepTest() {
@@ -102,6 +107,25 @@ public class GroepServiceTest {
         Assertions.assertEquals(result.getId(), this.groep.getId());
         Assertions.assertEquals(result.getBeschrijving(), this.groep.getBeschrijving());
         Assertions.assertEquals(result.getNaam(), this.groep.getNaam());
+    }
+    
+    @Test
+    public void getAllGroepenTest() {
+        Mockito.when(this.repository.save(this.groep)).thenReturn(this.groep);
+        this.repository.save(this.groep);
+        
+        List<Groep> results = this.repository.findAll();
+        
+        Assertions.assertEquals(this.groep, results.get(0));
+    }
+    
+    @Test
+    public void getGroepOpNaamTest(){
+        Mockito.when(this.repository.findByName(this.groep.getNaam())).thenReturn(this.gevondenGroepen);
+
+        List<Groep> result = this.repository.findByName(this.groep.getNaam());
+
+        Assertions.assertEquals(result, this.gevondenGroepen);
     }
     
     @Test
@@ -135,6 +159,27 @@ public class GroepServiceTest {
         Assertions.assertNotEquals(groepOud.getBeschrijving(), groepNieuwer.getBeschrijving());
     }
     
+    public void voegGroepLidToeTest() {
+        Mockito.when(this.repository.save(this.groep)).thenReturn(this.groep);
+        Mockito.when(this.repository.voegGroepslidToe(this.lid, true, this.groep.getId())).thenReturn(this.groepsLid);
+        
+        Groep result = this.repository.save(this.groep);
+        @SuppressWarnings("LocalVariableHidesMemberVariable")
+        GroepsLid lid = this.repository.voegGroepslidToe(this.lid, true, this.groep.getId());
+        GroepsLid lidResult = this.repository.getAllGroepsLedenFromGroep(result.getId()).get(0);
+        
+        Assertions.assertEquals(lid, lidResult);
+    }
     
+    @Test
+    public void getAllGroepenOfAccountTest() {
+        Mockito.when(this.repository.save(this.groep)).thenReturn(this.groep);
+        this.repository.save(this.groep);
+        @SuppressWarnings("LocalVariableHidesMemberVariable")
+        GroepsLid lid = this.repository.voegGroepslidToe(this.lid, true, this.groep.getId());
+        Groep result = this.repository.getGroepenPerAccount(this.lid.getId()).get(0);
+        
+        Assertions.assertEquals(lid.getGroep(), result);
+    }
     
 }
