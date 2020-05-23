@@ -78,14 +78,41 @@ public class EvenementControllerTest {
         ResponseEntity<Evenement> result = evenementController.evenementAanmaken(titel, beschrijving);
 
         Assertions.assertEquals(result.getStatusCodeValue(), 200);
-        Assertions.assertNotEquals(Objects.requireNonNull(result.getBody()).getId(), 0);
+        Assertions.assertNotNull(result.getBody());
+        Assertions.assertNotEquals(result.getBody().getId(), 0);
         Assertions.assertEquals(result.getBody().getNaam(), titel);
         Assertions.assertEquals(result.getBody().getBeschrijving(), beschrijving);
     }
 
     @Test
+    public void evenementAanmakenMetLegeNaamTest() {
+        ResponseEntity<Evenement> result = evenementController.evenementAanmaken(null, "beschrijving");
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getStatusCodeValue(), 422);
+    }
+
+    @Test
+    public void evenementAanmakenMetLegeBeschrijvingTest() {
+        ResponseEntity<Evenement> result = evenementController.evenementAanmaken("titel", null);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getStatusCodeValue(), 422);
+    }
+
+    @Test
+    public void evenementAanmakenMetLegeNaamEnBeschrijving(){
+        ResponseEntity<Evenement> result = evenementController.evenementAanmaken(null, null);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getStatusCodeValue(), 422);
+    }
+
+    @Test
     public void evenementBewerkenTest(){
         Evenement evenement = new Evenement();
+        evenement.setBeschrijving("nieuwe beschrijving");
+        evenement.setNaam("nieuwe naam");
 
         Mockito.when(evenementService.getEvenement(1)).thenReturn(evenement);
         Mockito.when(evenementService.saveEvenement(evenement)).thenReturn(evenement);
@@ -93,8 +120,17 @@ public class EvenementControllerTest {
         ResponseEntity<Evenement> result = evenementController.evenementBewerken(evenement);
 
         Assertions.assertEquals(result.getStatusCodeValue(), 200);
+        Assertions.assertNotNull(result.getBody());
         Assertions.assertEquals(result.getBody().getNaam(), "nieuwe naam");
         Assertions.assertEquals(result.getBody().getBeschrijving(), "nieuwe beschrijving");
+    }
+
+    @Test
+    public void evenementBewerkenLeegEvenementTest() {
+        ResponseEntity<Evenement> result = evenementController.evenementBewerken(null);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getStatusCodeValue(), 422);
     }
 
     @Test
@@ -106,7 +142,7 @@ public class EvenementControllerTest {
     }
 
     @Test
-    public void postTaakTest() throws Exception {
+    public void postTaakTest() {
         Evenement evenement = new Evenement();
 
         Mockito.when(evenementService.getEvenement(1)).thenReturn(evenement);
@@ -115,12 +151,37 @@ public class EvenementControllerTest {
         ResponseEntity<Evenement> result = evenementController.taakAanmaken(1, taak);
 
         Assertions.assertEquals(result.getStatusCodeValue(), 200);
-        Assertions.assertEquals(Objects.requireNonNull(result.getBody()).getTaken().size(),1);
-        Assertions.assertEquals(Objects.requireNonNull(result.getBody()).getTaken().get(0),taak);
+        Assertions.assertNotNull(result.getBody());
+        Assertions.assertNotEquals(result.getBody().getTaken().size(),0);
+        Assertions.assertTrue(result.getBody().getTaken().contains(taak));
     }
 
     @Test
-    public void deleteTaakTest() throws Exception {
+    public void postTaakMetLegeTaakTest(){
+        ResponseEntity<Evenement> result = evenementController.taakAanmaken(1,null);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getStatusCodeValue(), 422);
+    }
+
+    @Test
+    public void postTaakMetVerkeerdIdTest(){
+        ResponseEntity<Evenement> result = evenementController.taakAanmaken(0,taak);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getStatusCodeValue(), 422);
+    }
+
+    @Test
+    public void postTaakMetVerkeerdIdEnLegeTaakTest(){
+        ResponseEntity<Evenement> result = evenementController.taakAanmaken(0,null);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getStatusCodeValue(), 422);
+    }
+
+    @Test
+    public void deleteTaakTest()   {
         Evenement evenement = new Evenement();
         Taak taak = new Taak();
         evenement.addTaak(taak);
@@ -130,11 +191,36 @@ public class EvenementControllerTest {
         ResponseEntity<Evenement> result = evenementController.taakVerwijderen(1, taak);
 
         Assertions.assertEquals(result.getStatusCodeValue(), 200);
-        Assertions.assertEquals(Objects.requireNonNull(result.getBody()).getTaken().size(),0);
+        Assertions.assertNotNull(result.getBody());
+        Assertions.assertFalse(result.getBody().getTaken().contains(taak));
     }
 
     @Test
-    public void postBenodigheidTest() throws Exception {
+    public void deleteTaakMetLegeTaakTest(){
+        ResponseEntity<Evenement> result = evenementController.taakVerwijderen(1,null);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getStatusCodeValue(), 422);
+    }
+
+    @Test
+    public void deleteTaakMetVerkeerdEvenementIdTest(){
+        ResponseEntity<Evenement> result = evenementController.taakVerwijderen(0,taak);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getStatusCodeValue(), 422);
+    }
+
+    @Test
+    public void deleteTaakMetLegeTaakEnVerkeerdEvenementIdTest(){
+        ResponseEntity<Evenement> result = evenementController.taakVerwijderen(0,null);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getStatusCodeValue(), 422);
+    }
+
+    @Test
+    public void postBenodigheidTest()   {
         Evenement evenement = new Evenement();
 
         Mockito.when(evenementService.getEvenement(1)).thenReturn(evenement);
@@ -143,12 +229,36 @@ public class EvenementControllerTest {
         ResponseEntity<Evenement> result = evenementController.benodigheidAanmaken(1, benodigheid);
 
         Assertions.assertEquals(result.getStatusCodeValue(), 200);
-        Assertions.assertEquals(Objects.requireNonNull(result.getBody()).getBenodigheden().size(),1);
-        Assertions.assertEquals(Objects.requireNonNull(result.getBody()).getBenodigheden().get(0), benodigheid);
+        Assertions.assertNotNull(result.getBody());
+        Assertions.assertNotEquals(result.getBody().getBenodigheden().size(),0);
+        Assertions.assertTrue(result.getBody().getBenodigheden().contains(benodigheid));
     }
 
     @Test
-    public void deleteBenodigheidTest() throws Exception {
+    public void postBenodigheidMetLegeBenodigheidTest(){
+        ResponseEntity<Evenement> result = evenementController.benodigheidAanmaken(1,null);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getStatusCodeValue(), 422);
+    }
+
+    @Test
+    public void postBenodigheidMetVerkeerdIdTest(){
+        ResponseEntity<Evenement> result = evenementController.benodigheidAanmaken(0,benodigheid);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getStatusCodeValue(), 422);
+    }
+    @Test
+    public void postBenodigheidMetLegeBenodigheidEnVerkeerdIdTest(){
+        ResponseEntity<Evenement> result = evenementController.benodigheidAanmaken(0,null);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getStatusCodeValue(), 422);
+    }
+
+    @Test
+    public void deleteBenodigheidTest()   {
         Evenement evenement = new Evenement();
         Benodigheid benodigheid = new Benodigheid();
         evenement.addBenodigheid(benodigheid);
@@ -159,7 +269,32 @@ public class EvenementControllerTest {
         ResponseEntity<Evenement> result = evenementController.benodigheidVerwijderen(1, benodigheid);
 
         Assertions.assertEquals(result.getStatusCodeValue(), 200);
-        Assertions.assertEquals(Objects.requireNonNull(result.getBody()).getBenodigheden().size(), 0);
+        Assertions.assertNotNull(result.getBody());
+        Assertions.assertFalse(result.getBody().getBenodigheden().contains(benodigheid));
+    }
+
+    @Test
+    public void deleteBenodigheidMetLegeBenodigheidTest(){
+        ResponseEntity<Evenement> result = evenementController.benodigheidVerwijderen(1,null);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getStatusCodeValue(), 422);
+    }
+
+    @Test
+    public void deleteBenodigheidMetVerkeerdIdTest(){
+        ResponseEntity<Evenement> result = evenementController.benodigheidVerwijderen(0,benodigheid);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getStatusCodeValue(), 422);
+    }
+
+    @Test
+    public void deleteBenodigheidMetLegeBenodigheidEnVerkeerdIdTest(){
+        ResponseEntity<Evenement> result = evenementController.benodigheidVerwijderen(0,null);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getStatusCodeValue(), 422);
     }
 
     @Test
