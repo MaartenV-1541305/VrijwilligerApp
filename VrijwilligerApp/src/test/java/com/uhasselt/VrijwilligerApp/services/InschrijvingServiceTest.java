@@ -177,17 +177,21 @@ public class InschrijvingServiceTest {
 
         Inschrijving result = inschrijvingService.getInschrijving(id);
 
-        Assert.assertNull(result);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(result.isAanwezigheid(),check);
+
     }
 
     @Test
     public void getAanwezighedenTest(){
         int id = fakeRandom.nextInt();
-        Mockito.when(repository.getAanwezigheden(id)).thenReturn(null);
+        Mockito.when(repository.getAanwezigheden(id)).thenReturn(inschrijvingen);
 
-        List<Inschrijving> inschrijvingen = inschrijvingService.getAanwezigheden(id);
+        List<Inschrijving> aanwezigheden = inschrijvingService.getAanwezigheden(id);
 
-        Assert.assertNull(inschrijvingen);
+        Assert.assertNotNull(aanwezigheden);
+        Assert.assertEquals(inschrijvingen,aanwezigheden);
+        Assert.assertEquals(inschrijvingen.size(),aanwezigheden.size());
     }
 }
 

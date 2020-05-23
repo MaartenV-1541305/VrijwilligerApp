@@ -29,7 +29,7 @@ public class InschrijvingController {
         return null;
     }
 
-    public ResponseEntity<List<Inschrijving>> getAanwezigheden(int inschrijvingsId){
+    public ResponseEntity<List<Inschrijving>> getAanwezigheden(long inschrijvingsId){
         return null;
     }
 

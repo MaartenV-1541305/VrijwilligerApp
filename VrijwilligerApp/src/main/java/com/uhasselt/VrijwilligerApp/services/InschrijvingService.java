@@ -85,12 +85,12 @@ public class InschrijvingService implements IInschrijvingService {
     }
 
     @Override
-    public List<Inschrijving> getAanwezigheden(int vrijwilligersId) {
+    public List<Inschrijving> getAanwezigheden(long vrijwilligersId) {
         return inschrijvingRepository.getAanwezigheden(vrijwilligersId);
     }
 
     @Override
-    public boolean putScore(int vrijwilligersId, double score) {
+    public boolean putScore(long vrijwilligersId, double score) {
         return inschrijvingRepository.updateScore(vrijwilligersId, score);
     }
 }

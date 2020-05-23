@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,20 +97,32 @@ public class InschrijvingControllerTest {
 
     @Test
     public void getAanwezighedenTest(){
-        Mockito.when(inschrijvingService.getAanwezigheden(1)).thenReturn(null);
-        List<Inschrijving> aanwezigheden = controller.getAanwezigheden(1).getBody();
+        Mockito.when(inschrijvingService.getAanwezigheden(account.getId())).thenReturn(inschrijvingen);
+        ResponseEntity<List<Inschrijving>> response = controller.getAanwezigheden(account.getId());
+        List<Inschrijving> result = response.getBody();
+        int statusCode = response.getStatusCode().value();
 
-        Assertions.assertEquals(aanwezigheden, null);
+
+        Assertions.assertEquals(result , inschrijvingen);
+        Assertions.assertEquals(account.getId(), inschrijvingen.get(0).getAccount().getId());
+        Assertions.assertEquals(account.getId(), inschrijvingen.get(1).getAccount().getId());
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.size(), inschrijvingen.size());
+        Assertions.assertEquals(statusCode, 200);
     }
 
     @Test
     public void BerekenNieuweScoreTest(){
-        Mockito.when(inschrijvingService.getAanwezigheden(1)).thenReturn(null);
-        List<Inschrijving> aanwezigheden = controller.getAanwezigheden(1).getBody();
+        Mockito.when(inschrijvingService.getAanwezigheden(account.getId())).thenReturn(inschrijvingen);
+        ResponseEntity<List<Inschrijving>> response = controller.getAanwezigheden(account.getId());
+        List<Inschrijving> aanwezigheden = response.getBody();
+        int statusCode = response.getStatusCode().value();
+
         double score = controller.berekenNieuweScore(aanwezigheden);
 
-        Mockito.when(inschrijvingService.putScore(1,score)).thenReturn(null);
-        Mockito.verify(inschrijvingService).putScore(1,score);
+        Mockito.when(inschrijvingService.putScore(account.getId(),score)).thenReturn(true);
+        Mockito.verify(inschrijvingService).putScore(account.getId(),score);
+
         Assertions.assertEquals(score, 0);
     }
 
