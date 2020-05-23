@@ -173,11 +173,21 @@ public class InschrijvingServiceTest {
         int id = fakeRandom.nextInt();
         boolean check = fakeRandom.nextBoolean();
         inschrijvingService.putAanwezigheid(id,check);
-        Mockito.when(repository.updateAanwezigheid(id,check)).thenReturn(null);
+        Mockito.when(repository.updateAanwezigheid(id,check)).thenReturn(true);
 
-        Inschrijving result = repository.findById(0L).get();
+        Inschrijving result = inschrijvingService.getInschrijving(id);
 
         Assert.assertNull(result);
+    }
+
+    @Test
+    public void getAanwezighedenTest(){
+        int id = fakeRandom.nextInt();
+        Mockito.when(repository.getAanwezigheden(id)).thenReturn(null);
+
+        List<Inschrijving> inschrijvingen = inschrijvingService.getAanwezigheden(id);
+
+        Assert.assertNull(inschrijvingen);
     }
 }
 

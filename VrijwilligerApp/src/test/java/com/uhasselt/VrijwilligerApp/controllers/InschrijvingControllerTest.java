@@ -94,6 +94,25 @@ public class InschrijvingControllerTest {
         Assertions.assertEquals(statusCode, 200);
     }
 
+    @Test
+    public void getAanwezighedenTest(){
+        Mockito.when(inschrijvingService.getAanwezigheden(1)).thenReturn(null);
+        List<Inschrijving> aanwezigheden = controller.getAanwezigheden(1).getBody();
+
+        Assertions.assertEquals(aanwezigheden, null);
+    }
+
+    @Test
+    public void BerekenNieuweScoreTest(){
+        Mockito.when(inschrijvingService.getAanwezigheden(1)).thenReturn(null);
+        List<Inschrijving> aanwezigheden = controller.getAanwezigheden(1).getBody();
+        double score = controller.berekenNieuweScore(aanwezigheden);
+
+        Mockito.when(inschrijvingService.putScore(1,score)).thenReturn(null);
+        Mockito.verify(inschrijvingService).putScore(1,score);
+        Assertions.assertEquals(score, 0);
+    }
+
 
 
     // @Test

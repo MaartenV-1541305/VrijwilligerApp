@@ -28,4 +28,12 @@ public class InschrijvingController {
     public ResponseEntity isAanwezig(long inschrijvingsId, boolean aanwezigheid){
         return null;
     }
+
+    public ResponseEntity<List<Inschrijving>> getAanwezigheden(int inschrijvingsId){
+        return null;
+    }
+
+    public double berekenNieuweScore(List<Inschrijving> aanwezigheden) {
+        return 0;
+    }
 }

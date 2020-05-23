@@ -17,6 +17,8 @@ public interface IInschrijvingService {
     Inschrijving verwijderBenodigheid(long benodigheidId, long inschrijvingId);
     Inschrijving schrijfInVoorEvenement(long groepID, long inschrijvingId);
     Inschrijving getInschrijving(int inschrijvingsId);
+    List<Inschrijving> getAanwezigheden(int vrijwilligersId);
     boolean putAanwezigheid(long inschrijvingsId,boolean aanwezigheid);
+    boolean putScore(int vrijwilligersId, double score);
 }
 

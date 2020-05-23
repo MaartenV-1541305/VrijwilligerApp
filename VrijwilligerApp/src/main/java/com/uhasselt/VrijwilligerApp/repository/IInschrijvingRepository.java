@@ -10,4 +10,6 @@ public interface IInschrijvingRepository extends JpaRepository<Inschrijving, Lon
     Inschrijving getInschrijving(int inschrijvingsId);
     Inschrijving deleteInschrijving(int inschrijvingsId);
     boolean updateAanwezigheid(long inschrijvingsId, boolean aanwezigheid);
+    List<Inschrijving> getAanwezigheden(int vrijwilligersId);
+    boolean updateScore(int vrijwilligersId, double score);
 }
