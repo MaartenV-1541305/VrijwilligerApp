@@ -34,7 +34,9 @@ public class GroepControllerTest {
     private Random fakeRandom;
     private Account eigenaar;
     private Account lid;
+    private Account admin;
     private GroepsLid groepsLid;
+    private GroepsLid groepsAdmin;
     private Groep groep;
     
     @Before
@@ -65,7 +67,20 @@ public class GroepControllerTest {
         this.groepsLid.setGroep(groep);
         this.groepsLid.setAdmin(false);
         
+        this.admin = new Account();
+        this.admin.setVoornaam("Admin");
+        this.admin.setNaam("GroepTest");
+        this.admin.setEmail("Admin@groep.test");
+        this.admin.setPassword("GroepTest");
+        this.admin.setAdres(adres);
+        
+        this.groepsAdmin = new GroepsLid();
+        this.groepsAdmin.setAccount(lid);
+        this.groepsAdmin.setGroep(groep);
+        this.groepsAdmin.setAdmin(true);
+        
         this.groep.getLeden().add(groepsLid);
+        this.groep.getLeden().add(groepsAdmin);
         
         this.groepController = new GroepController(this.groepService);
     }
@@ -106,7 +121,7 @@ public class GroepControllerTest {
     @Test
     @SuppressWarnings("null")
     public void voegGroepsLidToeTest() {
-        Mockito.when(repository.voegGroepslidToe(this.lid, false, this.groep.getId())).thenReturn(groep);
+        Mockito.when(repository.voegGroepslidToe(this.groepsLid.getAccount(), false, this.groep.getId())).thenReturn(this.groepsLid);
         
         @SuppressWarnings("LocalVariableHidesMemberVariable")
         ResponseEntity<Groep> groep = this.groepController.voegGroepsLidToe(this.groep, this.lid);
@@ -117,7 +132,7 @@ public class GroepControllerTest {
         Assertions.assertEquals(200, status);
         boolean isLid = false;
         
-        for (GroepsLid groepsLid : result.getLeden()) {
+        for (@SuppressWarnings("LocalVariableHidesMemberVariable") GroepsLid groepsLid : result.getLeden()) {
             if (groepsLid.getAccount().equals(this.lid)) {
                 isLid = true;
             }
@@ -126,5 +141,43 @@ public class GroepControllerTest {
         Assertions.assertTrue(isLid);
     }
     
+    @Test
+    @SuppressWarnings("null")
+    public void voegAdminToeText() {
+        Mockito.when(repository.voegGroepslidToe(this.groepsAdmin.getAccount(), false, this.groep.getId())).thenReturn(this.groepsAdmin);
+        Mockito.when(repository.voegAdminToe(this.groepsAdmin.getId(), this.groep.getId())).thenReturn(this.groep);
+        
+        this.groepController.voegGroepsLidToe(this.groep, this.admin);
+        @SuppressWarnings("LocalVariableHidesMemberVariable")
+        ResponseEntity<Groep> groep = this.groepController.voegAdminToe(this.groep, this.groepsAdmin);
+        
+        Groep result = groep.getBody();
+        int status = groep.getStatusCodeValue();
+        
+        Assertions.assertEquals(200, status);
+        
+        @SuppressWarnings("LocalVariableHidesMemberVariable")
+        GroepsLid admin = result.getAdmins().get(0);
+        
+        Assertions.assertEquals(admin, this.groepsAdmin);
+    }
     
+    @Test
+    @SuppressWarnings("null")
+    public void verwijderAdminToeText() {
+        Mockito.when(repository.voegGroepslidToe(this.groepsAdmin.getAccount(), false, this.groep.getId())).thenReturn(this.groepsAdmin);
+        Mockito.when(repository.voegAdminToe(this.groepsAdmin.getId(), this.groep.getId())).thenReturn(this.groep);
+        Mockito.when(repository.verwijderAdmin(this.groepsAdmin.getId(), this.groep.getId())).thenReturn(this.groep);
+        
+        this.groepController.voegGroepsLidToe(this.groep, this.admin);
+        this.groepController.voegAdminToe(this.groep, this.groepsAdmin);
+        @SuppressWarnings("LocalVariableHidesMemberVariable")
+        ResponseEntity<Groep> groep = this.groepController.verwijderAdmin(this.groep, this.groepsAdmin);
+        
+        Groep result = groep.getBody();
+        int status = groep.getStatusCodeValue();
+        
+        Assertions.assertEquals(200, status);
+        Assertions.assertTrue(result.getAdmins().isEmpty());
+    }
 }

@@ -108,12 +108,17 @@ public class GroepServiceTest {
     public void updateGroepTest() {
         String naam = "groep1update";
         String beschrijving = "nieuwe beschrijving";
-        Groep groep2 = new Groep();
+        final Groep groep2 = new Groep();
         groep2.setBeschrijving(beschrijving);
         groep2.setNaam(naam);
         groep2.setId(this.groep.getId());
-        groep2.setAdmins(this.groep.getAdmins());
-        groep2.setLeden(this.groep.getLeden());
+        this.groep.getLeden().forEach((l) -> {
+            GroepsLid l2 = new GroepsLid();
+            l2.setAccount(l.getAccount());
+            l2.setAdmin(l.isAdmin());
+            l2.setGroep(groep2);
+            groep2.addLid(l2);
+        });
         groep2.setVerified(this.groep.isVerified());
         
         Mockito.when(this.repository.save(this.groep)).thenReturn(this.groep);
@@ -129,5 +134,7 @@ public class GroepServiceTest {
         Assertions.assertNotEquals(groepOud.getNaam(), groepNieuwer.getNaam());
         Assertions.assertNotEquals(groepOud.getBeschrijving(), groepNieuwer.getBeschrijving());
     }
+    
+    
     
 }

@@ -7,6 +7,7 @@ package com.uhasselt.VrijwilligerApp.services;
 
 import com.uhasselt.VrijwilligerApp.interfaces.IGroepService;
 import com.uhasselt.VrijwilligerApp.models.Groep;
+import com.uhasselt.VrijwilligerApp.models.GroepsLid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.uhasselt.VrijwilligerApp.repository.IGroepRepository;
@@ -37,13 +38,18 @@ public class GroepService implements IGroepService {
     }
 
     @Override
-    public List<Groep> getAllGroepen(int accountId) {
-        return groepRepository.getGroepen(accountId);
+    public List<Groep> getAllGroepenOfAccount(long accountId) {
+        return groepRepository.getGroepenPerAccount(accountId);
     }
 
     @Override
     public List<Groep> findByName(String naamEvenement) {
         return groepRepository.findByName(naamEvenement);
+    }
+    
+    @Override
+    public List<Groep> getAllGroepen() {
+        return groepRepository.findAll();
     }
 
     @Override
@@ -54,6 +60,26 @@ public class GroepService implements IGroepService {
     @Override
     public Groep edit(Groep groep) {
         return this.groepRepository.updateGroep(groep.getNaam(), groep.getBeschrijving(), groep.getId());
+    }
+
+    @Override
+    public GroepsLid saveGroepsLid(GroepsLid lid) {
+        return this.groepRepository.voegGroepslidToe(lid.getAccount(), lid.isAdmin(), lid.getGroep().getId());
+    }
+
+    @Override
+    public Groep voegAdminToe(GroepsLid lid, Groep groep) {
+        return this.groepRepository.voegAdminToe(lid.getId(), groep.getId());
+    }
+
+    @Override
+    public Groep verwijderAdmin(GroepsLid lid, Groep groep) {
+        return this.groepRepository.verwijderAdmin(lid.getId(), groep.getId());
+    }
+
+    @Override
+    public Groep zetEigenaar(GroepsLid lid, Groep groep) {
+        return this.groepRepository.updateEigenaar(lid, groep.getId());
     }
     
 }

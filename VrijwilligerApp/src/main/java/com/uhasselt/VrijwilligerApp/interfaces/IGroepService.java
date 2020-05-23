@@ -6,6 +6,7 @@
 package com.uhasselt.VrijwilligerApp.interfaces;
 
 import com.uhasselt.VrijwilligerApp.models.Groep;
+import com.uhasselt.VrijwilligerApp.models.GroepsLid;
 import java.util.List;
 
 /**
@@ -15,8 +16,13 @@ import java.util.List;
 public interface IGroepService {
     public Groep findByID(long id);
     public Groep save(Groep nieuwGroep);
+    public GroepsLid saveGroepsLid(GroepsLid lid);
     public void delete(Groep groep);
     public Groep edit(Groep groep);
-    public List<Groep> getAllGroepen(int accountId);
+    public Groep voegAdminToe(GroepsLid lid, Groep groep);
+    public Groep verwijderAdmin(GroepsLid lid, Groep groep);
+    public Groep zetEigenaar(GroepsLid lid, Groep groep);
+    public List<Groep> getAllGroepenOfAccount(long accountId);
     public List<Groep> findByName(String naamEvenement);
+    public List<Groep> getAllGroepen();
 }

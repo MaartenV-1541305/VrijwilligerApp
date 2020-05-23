@@ -64,16 +64,15 @@ public class GroepServiceTest {
     
     @Test
     public void selectGroepenTest() {
-        Mockito.when(repository.getGroepen(fakeRandom.nextInt())).thenReturn(groepen);
+        Mockito.when(repository.getGroepenPerAccount(fakeRandom.nextInt())).thenReturn(groepen);
 
-        List<Groep> result = groepService.getAllGroepen(fakeRandom.nextInt());
+        List<Groep> result = groepService.getAllGroepenOfAccount(fakeRandom.nextInt());
 
         Assertions.assertNotNull(result);
         Assertions.assertEquals(result , groepen);
         Assertions.assertEquals(result.size(), groepen.size());
         Assertions.assertEquals("Groep 1", result.get(0).getNaam());
         Assertions.assertEquals("Groep 2", result.get(1).getNaam());
-
     }
     
 }
