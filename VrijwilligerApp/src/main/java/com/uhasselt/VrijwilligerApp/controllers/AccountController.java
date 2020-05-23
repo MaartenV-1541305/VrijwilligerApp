@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 public class AccountController {
-
     private IAccountService service;
 
     public AccountController(IAccountService accountService){
@@ -23,33 +22,36 @@ public class AccountController {
     @ResponseBody
     @PostMapping(path = {"/account"})
     public ResponseEntity<Account> nieuwAccount(String nm, String vnm, String email, String pw, String bevestPw, String adres) {
-        /*
-        //TODO: Email checken.
-        //TODO: Syntax email.
-        if (pw.equals(bevestPw)) {
-            Account account = new Account();
-            account.setVoornaam(vnm);
-            account.setNaam(nm);
-            account.setEmail(email);
-            account.setPassword(pw);
-            account.setAdres(adres);
-
-            return new ResponseEntity<Account>(account, HttpStatus.OK);
+        if (checkPassed(nm, vnm, email, pw, bevestPw, adres)) {
+            Account account = service.aanmakenAccount(nm, vnm, email, pw, bevestPw, adres);
+            return new ResponseEntity<>(account, HttpStatus.OK);
         } else {
             System.out.println("Wachtwoorden komen niet overeen!");
-
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
-        }*/
-        Account account = service.aanmakenAccount(nm, vnm, email, pw, bevestPw, adres);
-        return new ResponseEntity<Account>(account, HttpStatus.OK);
+        }
+    }
+
+    private boolean checkPassed( String nm, String vnm, String email, String pw, String bevestPw, String adres){
+        if(nm.isEmpty() || vnm.isEmpty() || email.isEmpty() || pw.isEmpty() || bevestPw.isEmpty() || adres.isEmpty() ){
+            System.out.println("Er is een blank veld");
+            return false;
+        }
+        if(!pw.equals(bevestPw)){
+            return false;
+        }
+        return true;
     }
 
     @CrossOrigin
     @ResponseBody
     @PostMapping(path = {"/account/"})
     public ResponseEntity<Account> inloggen(String email, String wachtwoord){
-        Account account = service.inloggen(email, wachtwoord);
-        return new ResponseEntity<Account>(account, HttpStatus.OK);
-    }
+        if( email.isEmpty() || !wachtwoord.isEmpty() ){
+            Account account = service.inloggen(email, wachtwoord);
+            return new ResponseEntity<>(account, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
 
+    }
 }
