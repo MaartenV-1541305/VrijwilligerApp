@@ -189,29 +189,51 @@ public class EvenementControllerTest {
     @Test
     public void zoekEvenementenOpNaamTest(){
         Mockito.when(evenementService.getEvenementen("test")).thenReturn(gevondenEvenementen);
-        List<Evenement> result = evenementController.zoekEvenementen("test").getBody();
+        ResponseEntity<List<Evenement>> response = evenementController.zoekEvenementen("test");
+        List<Evenement> result = response.getBody();
+        int statusCode = response.getStatusCode().value();
         Assertions.assertEquals(result, gevondenEvenementen);
+        Assertions.assertEquals(result.size(), gevondenEvenementen.size());
+        Assertions.assertEquals(statusCode, 200);
     }
 
     @Test
     public void zoekEvenementenOpStadEnRadiusTest(){
         Mockito.when(evenementService.getEvenementen("stad",150)).thenReturn(gevondenEvenementen);
-        List<Evenement> result = evenementController.zoekEvenementen("stad",150).getBody();
+        ResponseEntity<List<Evenement>> response = evenementController.zoekEvenementen("stad",150);
+        List<Evenement> result = response.getBody();
+        int statusCode = response.getStatusCode().value();
         Assertions.assertEquals(result, gevondenEvenementen);
+        Assertions.assertEquals(result.size(), gevondenEvenementen.size());
+        Assertions.assertEquals(statusCode, 200);
     }
 
     @Test
     public void detailsEvenementOpvragenTest(){
         Mockito.when(evenementService.getEvenement(1)).thenReturn(gevondenEvenement);
-        Evenement result = evenementController.detailsEvenementOpvragen(1).getBody();
+        ResponseEntity<Evenement> response = evenementController.detailsEvenementOpvragen(1);
+        Evenement result = response.getBody();
+        int statusCode = response.getStatusCode().value();
         Assertions.assertEquals(result, gevondenEvenement);
+        Assertions.assertEquals(statusCode, 200);
     }
 
     @Test
     public void vraagToestemmingTest(){
         Mockito.when(evenementService.getEvenement(1)).thenReturn(gevondenEvenement);
-        int statusCode = evenementController.vraagToestemming(1).getStatusCode().value();
+        ResponseEntity response= evenementController.vraagToestemming(1);
+        int statusCode= response.getStatusCode().value();
         Assertions.assertEquals(statusCode, 200);
+    }
+
+    @Test
+    public void vraagToestemmingWithInvalidIdTest()
+    {
+        Mockito.when(evenementService.getEvenement(-52)).thenReturn(null);
+        ResponseEntity response= evenementController.vraagToestemming(-52);
+        int statusCode= response.getStatusCode().value();
+        Assertions.assertEquals(400,statusCode);
+
     }
 
 }

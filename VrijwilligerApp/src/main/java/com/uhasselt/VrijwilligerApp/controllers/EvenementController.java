@@ -161,6 +161,7 @@ public class EvenementController {
     @ResponseBody
     @PostMapping(path = {"/evenement/vraagToestemming"})
     public ResponseEntity vraagToestemming(@RequestBody long evenementId ){
-        return null;
+        evenementService.getEvenement(evenementId);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
