@@ -65,6 +65,12 @@ public class GroepController {
         return new ResponseEntity<>(this.groepService.save(groep), HttpStatus.OK);
     }
     
+    public ResponseEntity<Groep> zetEigenaar(Groep groep, GroepsLid lid) {
+        groep.setMaker(lid);
+        
+        return new ResponseEntity<>(this.groepService.zetEigenaar(lid, groep), HttpStatus.OK);
+    }
+    
     @CrossOrigin
     @ResponseBody
     @PostMapping(path = {"/groep"})

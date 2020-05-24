@@ -180,4 +180,21 @@ public class GroepControllerTest {
         Assertions.assertEquals(200, status);
         Assertions.assertTrue(result.getAdmins().isEmpty());
     }
+    
+    @Test
+    @SuppressWarnings("null")
+    public void zetEigenaarTest() {
+        Mockito.when(repository.voegGroepslidToe(this.groepsAdmin.getAccount(), false, this.groep.getId())).thenReturn(this.groepsAdmin);
+        Mockito.when(repository.updateEigenaar(this.groepsAdmin, this.groep.getId())).thenReturn(this.groep);
+        
+        this.groepController.voegGroepsLidToe(this.groep, this.admin);
+        @SuppressWarnings("LocalVariableHidesMemberVariable")
+        ResponseEntity<Groep> groep = this.groepController.zetEigenaar(this.groep, this.groepsAdmin);
+        
+        Groep result = groep.getBody();
+        int status = groep.getStatusCodeValue();
+        
+        Assertions.assertEquals(200, status);
+        Assertions.assertEquals(result.getMaker(), this.groepsAdmin);
+    }
 }
