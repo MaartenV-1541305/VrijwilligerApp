@@ -143,7 +143,7 @@ public class GroepControllerTest {
     
     @Test
     @SuppressWarnings("null")
-    public void voegAdminToeText() {
+    public void voegAdminToeTest() {
         Mockito.when(repository.voegGroepslidToe(this.groepsAdmin.getAccount(), false, this.groep.getId())).thenReturn(this.groepsAdmin);
         Mockito.when(repository.voegAdminToe(this.groepsAdmin.getId(), this.groep.getId())).thenReturn(this.groep);
         
@@ -164,7 +164,7 @@ public class GroepControllerTest {
     
     @Test
     @SuppressWarnings("null")
-    public void verwijderAdminToeText() {
+    public void verwijderAdminTest() {
         Mockito.when(repository.voegGroepslidToe(this.groepsAdmin.getAccount(), false, this.groep.getId())).thenReturn(this.groepsAdmin);
         Mockito.when(repository.voegAdminToe(this.groepsAdmin.getId(), this.groep.getId())).thenReturn(this.groep);
         Mockito.when(repository.verwijderAdmin(this.groepsAdmin.getId(), this.groep.getId())).thenReturn(this.groep);
