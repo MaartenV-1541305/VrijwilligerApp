@@ -11,9 +11,12 @@ public class GroepsLid {
 
     @OneToOne
     private Account account;
+    
+    @OneToOne
+    private Groep groep;
 
     private boolean  isAdmin;
-
+    
     public GroepsLid() {
     }
 
@@ -36,4 +39,14 @@ public class GroepsLid {
     public void setAdmin(boolean admin) {
         isAdmin = admin;
     }
+
+    public Groep getGroep() {
+        return groep;
+    }
+
+    public void setGroep(Groep groep) {
+        this.groep = groep;
+    }
+    
+    
 }

@@ -68,14 +68,9 @@ public class EvenementController {
 
     @CrossOrigin
     @ResponseBody
-    @PostMapping(path = {"/evenement/{evenementId}/taak"})
-    public ResponseEntity<Evenement> taakAanmaken(@PathVariable("evenementId") long evenementId, @RequestBody Taak taak ){
-        Evenement evenement = evenementService.getEvenement(evenementId);
-        evenement.addTaak(taak);
-
-        evenementService.saveEvenement(evenement);
-
-        return new ResponseEntity<Evenement>(evenement, HttpStatus.OK);
+    @PostMapping(path = {"/evenement/taak"})
+    public ResponseEntity<Taak> postTaak(@RequestBody Taak taak ){
+        return new ResponseEntity<Taak>(taak, HttpStatus.OK);
     }
 
     @CrossOrigin
