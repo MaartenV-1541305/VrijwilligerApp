@@ -2,16 +2,21 @@ package com.uhasselt.VrijwilligerApp.services;
 
 import com.uhasselt.VrijwilligerApp.interfaces.IEvenementService;
 import com.uhasselt.VrijwilligerApp.models.Evenement;
-import com.uhasselt.VrijwilligerApp.repository.EvenementRepository;
+import com.uhasselt.VrijwilligerApp.repository.IEvenementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class EvenementService implements IEvenementService {
     @Autowired
-    private EvenementRepository evenementRepository;
+    private IEvenementRepository evenementRepository;
+
+    public EvenementService(IEvenementRepository evenementRepository) {
+        this.evenementRepository = evenementRepository;
+    }
+
 
     @Override
     public Evenement findByID(long id) {
@@ -19,7 +24,32 @@ public class EvenementService implements IEvenementService {
     }
 
     @Override
-    public Evenement save(Evenement nieuwEvenement) {
+    public List<Evenement> getAllGeorganiseerdeEvenementen(int accountId) {
+        return evenementRepository.getGeorganiseerdeEvenementen(accountId);
+    }
+
+    @Override
+    public Evenement saveEvenement(Evenement nieuwEvenement) {
         return evenementRepository.save(nieuwEvenement);
+    }
+
+    @Override
+    public List<Evenement> getEvenementen(String naamEvenement) {
+        return evenementRepository.selectEvenementen(naamEvenement);
+    }
+
+    @Override
+    public List<Evenement> getEvenementen(String stad, double radius) {
+        return evenementRepository.selectEvenementen(stad,radius);
+    }
+
+    @Override
+    public Evenement getEvenement(long evenementId) {
+        return evenementRepository.selectEvenement(evenementId);
+    }
+
+    @Override
+    public void deleteEvenement(Evenement evenement) {
+        evenementRepository.delete(evenement);
     }
 }

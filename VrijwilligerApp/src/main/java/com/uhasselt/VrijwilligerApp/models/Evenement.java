@@ -2,6 +2,7 @@ package com.uhasselt.VrijwilligerApp.models;
 
 import javax.persistence.Id;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,13 +18,13 @@ public class Evenement {
     private String beschrijving;
 
     @OneToMany
-    private List<Benodigheid> benodigheden;
+    private List<Benodigheid> benodigheden = new ArrayList<>();
 
     @OneToMany
-    private List<Taak> taken;
+    private List<Taak> taken = new ArrayList<>();
 
     @OneToMany
-    private List<Account> inschrijvingen;
+    private List<Account> inschrijvingen = new ArrayList<>();
 
     @OneToOne
     private Adres adres;
@@ -76,6 +77,14 @@ public class Evenement {
     public void addTaak(Taak taak){
         taken.add(taak);
     }
+
+    public void deleteTaak(Taak taak){taken.remove(taak);}
+
+    public void addBenodigheid(Benodigheid benodigheid){
+        benodigheden.add(benodigheid);
+    }
+
+    public void deleteBenodigheid(Benodigheid benodigheid){benodigheden.remove(benodigheid);}
 
     public List<Account> getInschrijvingen() {
         return inschrijvingen;
