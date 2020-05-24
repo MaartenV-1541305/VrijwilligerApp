@@ -1,6 +1,7 @@
 package com.uhasselt.VrijwilligerApp.controllers;
 
 import com.uhasselt.VrijwilligerApp.interfaces.IEvenementService;
+import com.uhasselt.VrijwilligerApp.models.Account;
 import com.uhasselt.VrijwilligerApp.models.Benodigheid;
 import com.uhasselt.VrijwilligerApp.models.Evenement;
 import com.uhasselt.VrijwilligerApp.models.Taak;
@@ -29,9 +30,11 @@ public class EvenementControllerTest {
     private List<Evenement> gevondenEvenementen;
     private Evenement gevondenEvenement;
     private Evenement evenement;
+    private Evenement evenement2;
     private Taak taak;
     private Benodigheid benodigheid;
     private Random fakeRandom;
+    private Account organisator;
 
 
     @Before
@@ -44,30 +47,40 @@ public class EvenementControllerTest {
         evenementController = new EvenementController(evenementService);
         fakeRandom = Mockito.mock(Random.class);
         Mockito.when(fakeRandom.nextInt()).thenReturn(0);
+        organisator = new Account();
+        organisator.setNaam("organisator");
 
         georganiseerdeEvenementen = new ArrayList<Evenement>();
-        georganiseerdeEvenementen.add(new Evenement());
-        georganiseerdeEvenementen.add(new Evenement());
+        evenement.setAccountOrganisator(organisator);
+        evenement2.setAccountOrganisator(organisator);
+        georganiseerdeEvenementen.add(evenement);
+        georganiseerdeEvenementen.add(evenement2);
 
         gevondenEvenementen = new ArrayList<Evenement>();
         gevondenEvenementen.add(new Evenement());
         gevondenEvenementen.add(new Evenement());
 
         gevondenEvenement=new Evenement();
+
     }
 
     @Test
     public void getAllGeorganiseerdeEvenementenTest()
     {
         Mockito.when(evenementService.getAllGeorganiseerdeEvenementen(fakeRandom.nextInt())).thenReturn(georganiseerdeEvenementen);
-        List<Evenement> result = evenementController.getGeorganiseerdEvenementen(fakeRandom.nextInt()).getBody();
+        ResponseEntity<List<Evenement>> responseEntityResult = evenementController.getGeorganiseerdEvenementen(fakeRandom.nextInt());
+        List<Evenement> result = responseEntityResult.getBody();
 
-        Assertions.assertEquals(result , georganiseerdeEvenementen);
         Assertions.assertNotNull(result);
+        Assertions.assertEquals(responseEntityResult.getStatusCode(), HttpStatus.OK);
+        Assertions.assertEquals(result , georganiseerdeEvenementen);
         Assertions.assertEquals(result.size(), georganiseerdeEvenementen.size());
+        Assertions.assertEquals(result.get(0).getAccountOrganisator().getNaam(), "organisator");
+        Assertions.assertEquals(result.get(1).getAccountOrganisator().getNaam(), "organisator");
 
     }
 
+  
     @Test
     public void evenementAanmakenTest(){
         String titel = "titel";
