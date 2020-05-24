@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
@@ -58,14 +59,18 @@ public class InschrijvingControllerTest {
     @Test
     public void getInschrijvingByAccountIdTest() throws Exception {
         Mockito.when(inschrijvingService.getAllInschrijvingenByAccountId(fakeRandom.nextInt())).thenReturn(inschrijvingen);
-        List<Inschrijving> result = controller.getInschrijvingenByAccount(fakeRandom.nextInt()).getBody();
 
-        Assertions.assertEquals(result , inschrijvingen);
-        Assertions.assertEquals(account.getId(), inschrijvingen.get(0).getAccount().getId());
-        Assertions.assertEquals(account.getId(), inschrijvingen.get(1).getAccount().getId());
+        ResponseEntity<List<Inschrijving>> responseEntityResult = controller.getInschrijvingenByAccount(fakeRandom.nextInt());
+        List<Inschrijving> result =responseEntityResult.getBody();
+
+        Assertions.assertEquals(responseEntityResult.getStatusCode(), HttpStatus.OK);
         Assertions.assertNotNull(result);
         Assertions.assertEquals(result.size(), inschrijvingen.size());
-
+        Assertions.assertEquals(result , inschrijvingen);
+        Assertions.assertNotNull(result.get(0).getAccount().getId());
+        Assertions.assertNotNull(result.get(1).getAccount().getId());
+        Assertions.assertEquals(account.getId(), inschrijvingen.get(0).getAccount().getId());
+        Assertions.assertEquals(account.getId(), inschrijvingen.get(1).getAccount().getId());
 
     }
 
@@ -85,8 +90,9 @@ public class InschrijvingControllerTest {
         int statusCode = controller.deleteInschrijving(fakeRandom.nextInt()).getStatusCode().value();
 
         Mockito.verify(inschrijvingService).deleteInschrijving(1);
-        Assertions.assertEquals(statusCode, 200);
+        Assertions.assertEquals(statusCode, HttpStatus.OK);
     }
+
     @Test
     public void getInschrijving(){
         Mockito.when(inschrijvingService.getInschrijving(1)).thenReturn(null);

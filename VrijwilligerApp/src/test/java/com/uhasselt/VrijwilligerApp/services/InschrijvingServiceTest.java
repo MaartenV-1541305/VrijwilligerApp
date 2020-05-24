@@ -53,19 +53,21 @@ public class InschrijvingServiceTest {
     }
 
     @Test
-    public void getInschrijvingenByAccountTest(){
+    public void selectInschrijvingenByAccountTest(){
         Mockito.when(repository.getAllInschrijvingen(fakeRandom.nextInt())).thenReturn(inschrijvingen);
         List<Inschrijving> result = inschrijvingService.getAllInschrijvingenByAccountId(fakeRandom.nextInt());
 
         Assertions.assertNotNull(result);
         Assertions.assertEquals(result , inschrijvingen);
         Assertions.assertEquals(result.size(), inschrijvingen.size());
+        Assertions.assertNotNull(result.get(0).getAccount().getId());
+        Assertions.assertNotNull(result.get(1).getAccount().getId());
         Assertions.assertEquals(result.get(0).getAccount().getNaam(), "testuser" );
         Assertions.assertEquals(result.get(1).getAccount().getNaam(), "testuser");
 
     }
     @Test
-    public void getInschrijvingenWithInvalidAccountId(){
+    public void selectInschrijvingenWithInvalidAccountId(){
 
         Mockito.when(repository.getAllInschrijvingen(-5)).thenReturn(null);
 
@@ -194,6 +196,4 @@ public class InschrijvingServiceTest {
         Assert.assertEquals(inschrijvingen.size(),aanwezigheden.size());
     }
 }
-
-
 
