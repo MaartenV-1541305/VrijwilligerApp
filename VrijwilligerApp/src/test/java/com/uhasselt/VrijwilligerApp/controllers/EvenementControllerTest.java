@@ -313,14 +313,14 @@ public class EvenementControllerTest {
     @Test
     public void evenementAanmakenBeindigenTest(){
         HttpStatus result = evenementController.evenementAanmakenBeindigen(1);
-        //TODO groepId test ?
+
         Assertions.assertEquals(result.value(), 200);
     }
 
     @Test
     public void evenementBewerkenBeindigenTest(){
         HttpStatus result = evenementController.evenementBewerkenBeindigen(1);
-        //TODO groepId test ?
+
         Assertions.assertEquals(result.value(), 200);
     }
 

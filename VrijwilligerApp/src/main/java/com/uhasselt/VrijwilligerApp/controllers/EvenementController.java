@@ -23,11 +23,6 @@ public class EvenementController {
         evenementService=iEvenementService;
     }
 
-    @CrossOrigin
-    @GetMapping(path = {"/evenement/{id}"})
-    public void getAllEvenementen(){
-        //TODO unit test
-    }
 
     @GetMapping
     public ResponseEntity<List<Evenement>> getGeorganiseerdEvenementen(int id)

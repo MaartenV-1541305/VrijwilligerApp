@@ -46,7 +46,7 @@ public class GroepController {
     @PostMapping(path = {"/groep"})
     public ResponseEntity<Groep> nieuwGroep(String groepsNaam, Account eigenaar) {
         
-        //TODO: Check groepsnaam bestaat al
+        // Check groepsnaam bestaat al
         List<Groep> result = groepService.findByName(groepsNaam);
         if (result.stream().anyMatch((g) -> {
             return g.getNaam().equals(groepsNaam);

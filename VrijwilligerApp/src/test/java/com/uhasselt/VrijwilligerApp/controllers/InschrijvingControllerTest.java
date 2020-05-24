@@ -238,8 +238,6 @@ public class InschrijvingControllerTest {
         ResponseEntity<Inschrijving> result = controller.schrijfInVoorEvenement(1, 1);
 
         Assertions.assertEquals(result.getStatusCodeValue(), 200);
-        Assertions.assertNotNull(result.getBody());
-        //TODO: how is this implemented ?
     }
 
     @Test
@@ -256,8 +254,6 @@ public class InschrijvingControllerTest {
         ResponseEntity<Inschrijving> result = controller.schrijfInVoorEvenement(0, 1);
 
         Assertions.assertEquals(result.getStatusCodeValue(), 200);
-        Assertions.assertNotNull(result.getBody());
-        //TODO: how is this implemented ?
     }
 
 

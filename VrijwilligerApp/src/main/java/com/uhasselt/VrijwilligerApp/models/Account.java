@@ -27,7 +27,6 @@ public class Account {
     }
 
     public Account(String nm, String vnm, String email, String pw, Adres adres) {
-        //TODO: ID?
         this.naam = vnm;
         this.voornaam = vnm;
         this.email = email;
