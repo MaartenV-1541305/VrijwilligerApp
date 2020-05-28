@@ -330,8 +330,7 @@ public class EvenementControllerTest {
         Mockito.when(evenementService.getAllGeorganiseerdeEvenementen(-52)).thenReturn(null);
         List<Evenement> result = evenementController.getGeorganiseerdEvenementen(-52).getBody();
 
-        Assertions.assertEquals(result, null);
-
+        Assertions.assertNull(result);
     }
 
     @Test
